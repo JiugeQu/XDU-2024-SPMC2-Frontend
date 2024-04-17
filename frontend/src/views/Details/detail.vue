@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-container">
+  <div class="detail-container all">
     <div class="product-image">
       <img :src="product.url" />
     </div>
@@ -63,6 +63,12 @@ export default {
 </script>
   
   <style scoped>
+
+  .all{
+    margin:0;
+    padding:0;
+    background-color: #cfc0c0d9;
+}
 .detail-container {
   display: flex;
   justify-content: space-between;
@@ -71,6 +77,8 @@ export default {
 .product-image {
   flex: 1;
   margin-left:10rem;
+  width: 16rem; 
+  height: 18rem; 
 }
 
 .product-image img {

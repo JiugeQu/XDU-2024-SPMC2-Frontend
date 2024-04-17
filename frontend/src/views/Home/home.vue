@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <div class="all">
     <div class="product-container">
       <div v-for="(item, index) in items" :key="index" class="product-item">
@@ -102,7 +103,6 @@ export default {
 
 <style scoped>
 .all{
-  height: 100%;
     margin:0;
     padding:0;
     background-color: #cfc0c0d9;

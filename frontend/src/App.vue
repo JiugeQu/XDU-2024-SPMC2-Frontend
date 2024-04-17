@@ -12,7 +12,7 @@ export default {
 
 <template>
   <!-- <RouterView /> -->
-<Header></Header>
+    <Header v-show="$route.path=='/home'||$route.path=='/detail/'"></Header>
     <router-view></router-view>
     <Footer></Footer>
 </template>
@@ -22,14 +22,8 @@ export default {
   ** 请将全局样式拷贝到项目的全局 CSS 文件或者当前页面的顶部 **
   ** 否则页面将无法正常显示                                  **
   ************************************************************/
-  /* html,body,#app{
-    height: 100%;
-    margin:0;
-    padding:0;
-    background-color: #cfc0c0d9;
-  } */
   html {
-    font-size: 16px;
+    /* font-size: 16px; */
   }
 
   body {

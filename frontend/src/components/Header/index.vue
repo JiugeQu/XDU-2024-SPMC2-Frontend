@@ -66,7 +66,7 @@ export default{
 
 <style scoped lang="css">
 .all{
-  height: 100%;
+
     margin:0;
     padding:0;
     background-color: #cfc0c0d9;

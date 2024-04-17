@@ -32,6 +32,7 @@ export default {
     this.getProductDetails(productId);
   },
   methods: {
+
     getProductDetails(productId) {
       const token = localStorage.getItem("token");
       // 发起请求获取商品详情
@@ -53,7 +54,7 @@ export default {
 
     buyNow(product) {
       console.log("立即购买");
-      this.$route.push({path:"/付款页路由"+product}); //product为传给付款页的数据，根据情况改成id/product
+      this.$router.push({path:"/order/"+product.id}); //product为传给付款页的数据，根据情况改成id/product
     },
     addToCart() {
       console.log("加入购物车");

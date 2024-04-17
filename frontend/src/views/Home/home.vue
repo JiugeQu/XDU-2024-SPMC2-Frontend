@@ -1,5 +1,4 @@
 <template>
-  <Header></Header>
   <div class="all">
     <div class="product-container">
       <div v-for="(item, index) in items" :key="index" class="product-item">

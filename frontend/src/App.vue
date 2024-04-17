@@ -14,7 +14,7 @@ export default {
   <!-- <RouterView /> -->
     <Header v-show="$route.path=='/home'||$route.path=='/detail/'"></Header>
     <router-view></router-view>
-    <Footer></Footer>
+    <Footer v-show="$route.path=='/home'||$route.path=='/detail/'"></Footer>
 </template>
 
 <style>
@@ -23,7 +23,7 @@ export default {
   ** 否则页面将无法正常显示                                  **
   ************************************************************/
   html {
-    /* font-size: 16px; */  
+    /* font-size: 16px;   */
   }
 
   body {

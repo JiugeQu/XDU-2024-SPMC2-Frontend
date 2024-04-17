@@ -12,9 +12,9 @@ export default {
 
 <template>
   <!-- <RouterView /> -->
-    <Header v-show="$route.path=='/home'||$route.path=='/detail/'"></Header>
+    <Header v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Header>
     <router-view></router-view>
-    <Footer></Footer>
+    <Footer v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Footer>
 </template>
 
 <style>

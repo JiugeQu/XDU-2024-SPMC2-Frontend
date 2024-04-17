@@ -38,7 +38,7 @@
     <div class="flex-col justify-start items-center relative section">
       <img
         class="shrink image"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=68367d67840e8160a1e4a4315c6be00d.png"
+        src="./images/apartment.png"
       />
       <div class="shrink-0 section_2 pos"></div>
       <span class="text_5 pos_11">
@@ -51,25 +51,24 @@
       <span class="font_2 pos_10">register</span>
       <img
         class="shrink-0 image_4 pos_6"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=0f04aab5565383833edacafddc947edb.png"
+        src="./images/search.png"
       />
       <img
         class="shrink-0 image_2 pos_3"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=5d4f630e1820826db8b263eac1faff11.png"
+        src="./images/logo-white.png"
       />
       <span class="font text text_2 pos_4">Easy BUY</span>
       <img
         class="shrink-0 image_5 pos_7"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=4b307c942ea14569835a892e820f658b.png"
-      />
+        src="./images/people.png"/>
       <img
         class="shrink-0 image_3 pos_5"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=fca633776f63317482482af2be1a1ccb.png"
+        src="./images/cart.png"
       />
       <span class="font_2 text_11 pos_14">Shop now</span>
       <img
         class="shrink-0 image_8 pos_13"
-        src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=b0c2383629a7f33987ab06828d1da1b5.png"
+        src="./images/arrow.png"
       />
       <div class="flex-col justify-start items-center section_3 pos_2">
         <div class="flex-col section_4">
@@ -77,13 +76,13 @@
             <div class="flex-row items-end shrink-0">
               <img
                 class="shrink-0 image_2"
-                src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=908cc43ebb7ab1f390179c6ee78836b0.png"
+                src="./images/logo-black.png"
               />
               <span class="font text text_4 ml-25">Easy BUY</span>
             </div>
             <img
               class="shrink-0 image_6 ml-212"
-              src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=330178079c158c3d240847f0a21ea058.png"
+              src="./images/close.png"
             />
           </div>
           <div class="flex-col self-center group mt-31">
@@ -99,19 +98,12 @@
             <span class="self-start font_3 text_9">Password</span>
             <div class="flex-row items-center self-stretch group_3">
               <input id="password" class="font_4 text_10" placeholder="Password" />
-              <!-- <img
-                class="shrink-0 image_7 ml-232"
-                src="https://ide.code.fun/api/image?token=6614ff1aa17dbc00115252e4&name=15dd4738b5d1ff709e6dcb5a749f7237.png"
-              /> -->
             </div>
             <div class="flex-row items-center self-start group_4">
-              <!-- <div class="shrink-0 group_5"></div> -->
               <input type="checkbox" class="shrink-0 group_5" />
               <span class="ml-16 font_5">Keep me signed in</span>
             </div>
-            <!-- <a href="#" class="self-start font_6 text_11">
-              Forgot password?
-            </a> -->
+
             <div class="flex-col justify-start items-center self-stretch text-wrapper_2">
               <button class="font_6 text_12" @click="login">Login</button>
             </div>

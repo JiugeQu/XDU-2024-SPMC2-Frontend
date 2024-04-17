@@ -8,7 +8,7 @@
   const password = ref('<password>');
 
   // 点击按钮时触发的登录函数
-  const Register = () => {
+  const login = () => {
     // 创建FormData实例并设置用户名和密码
     const formData = new FormData();
     formData.append('username', username.value);
@@ -17,7 +17,7 @@
     // 设置请求配置
     const config = {
       method: 'post',
-      url: 'http://127.0.0.1:4523/m2/4278659-0-default/161970447?apifoxResponseId=426626323',
+      url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
       data: formData
     };
 
@@ -38,7 +38,7 @@
     <div class="flex-col justify-start items-center relative section">
       <img
         class="shrink image"
-        src="./images/apartment.png"
+        src="../assets/apartment.png"
       />
       <div class="shrink-0 section_2 pos"></div>
       <span class="text_5 pos_11">
@@ -51,24 +51,24 @@
       <span class="font_2 pos_10">register</span>
       <img
         class="shrink-0 image_4 pos_6"
-        src="./images/search.png"
+        src="../assets/search.png"
       />
       <img
         class="shrink-0 image_2 pos_3"
-        src="./images/logo-white.png"
+        src="../assets/logo-white.png"
       />
       <span class="font text text_2 pos_4">Easy BUY</span>
       <img
         class="shrink-0 image_5 pos_7"
-        src="./images/people.png"/>
+        src="../assets/people.png"/>
       <img
         class="shrink-0 image_3 pos_5"
-        src="./images/cart.png"
+        src="../assets/cart.png"
       />
       <span class="font_2 text_11 pos_14">Shop now</span>
       <img
         class="shrink-0 image_8 pos_13"
-        src="./images/arrow.png"
+        src="../assets/arrow.png"
       />
       <div class="flex-col justify-start items-center section_3 pos_2">
         <div class="flex-col section_4">
@@ -76,22 +76,22 @@
             <div class="flex-row items-end shrink-0">
               <img
                 class="shrink-0 image_2"
-                src="./images/logo-black.png"
+                src="../assets/logo-black.png"
               />
               <span class="font text text_4 ml-25">Easy BUY</span>
             </div>
             <img
               class="shrink-0 image_6 ml-212"
-              src="./images/close.png"
+              src="../assets/close.png"
             />
           </div>
           <div class="flex-col self-center group mt-31">
             <div class="flex-col self-stretch">
-              <span class="self-start text_6">Create an account</span>
+              <span class="self-center text_6">Log in</span>
               <div class="flex-col justify-start items-start self-stretch relative group_2 mt-5">
                 <span class="font_3 text_7">Email/ User Name</span>
                 <div class="flex-col justify-start items-start text-wrapper pos_12">
-                  <input id="username" class="font_4 text_8" type="text" placeholder="Please enter your email address"/>
+                  <input id="username" class="font_4 text_8" type="text" placeholder="Email/ User Name"/>
                 </div>
               </div>
             </div>
@@ -101,16 +101,18 @@
             </div>
             <div class="flex-row items-center self-start group_4">
               <input type="checkbox" class="shrink-0 group_5" />
-              <span class="ml-16 font_5">I agree to the Google Terms of Service and <br> Privacy Policy</span>
+              <span class="ml-16 font_5">Keep me signed in</span>
             </div>
+
             <div class="flex-col justify-start items-center self-stretch text-wrapper_2">
-              <button class="font_6 text_12" @click="Register">Register</button>
+              <button class="font_6 text_12" @click="login">Login</button>
             </div>
+            <span class="self-start font_4 text_13">Forgot password?</span>
           </div>
           <div class="flex-row items-baseline self-center mt-31">
-            <span class="font_5 text_14">Are you already a member?</span>
-            <router-link to="/login">
-              <span class="shrink-0 font_6 text_15 ml-162">Login</span>
+            <span class="font_5 text_14">Not a member yet?</span>
+            <router-link to="/register">
+              <span class="shrink-0 font_6 text_15 ml-162">Register</span>
             </router-link>
           </div>
         </div>
@@ -407,7 +409,6 @@
     font-family: Poppins;
     line-height: 1rem;
     color: #000000;
-    /* white-space: normal; 文本换行 */
   }
   .text-wrapper_2 {
     padding: 1.13rem 0;

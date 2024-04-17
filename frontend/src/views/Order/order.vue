@@ -10,22 +10,7 @@ const router = useRouter();
 
 const productId = route.params.id;
 
-const token = ref(localStorage.getItem('authToken'));
-
-// 检查是否有新的 token 返回，并更新本地存储的 token
-axios.interceptors.response.use(
-  response => {
-    const newToken = response.headers['new-token'];
-    if (newToken) {
-      token.value = newToken;
-      localStorage.setItem('authToken', newToken);
-    }
-    return response;
-  },
-  error => {
-    return Promise.reject(error);
-});
-
+const token = localStorage.getItem('token');
 
 //商品信息
 const productInfo = reactive({
@@ -37,7 +22,6 @@ const productInfo = reactive({
   url: '',
   sellerId:0
 });
-
 
 //订单信息
 const data = reactive({
@@ -55,8 +39,7 @@ onMounted(async () => {
   try {
     
     const itemResponse = await axios.get(
-      /*`http://127.0.0.1:4523/m1/4324087-0-default/product_detail/${productId}`,{ headers: { Authorization: `Bearer ${token}` }}*/
-      `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,{ headers: { Authorization: `Bearer ${token.value}` }}
+      `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,{ headers: { Authorization: `Bearer ${token}` }}
 
     );
     console.log('商品id：',productId);
@@ -81,17 +64,14 @@ onMounted(async () => {
   
 });
 
-
 function onClick() {
-  router.push({ name: '商品详情页', params: { productId: productId.value } });
+  router.push({ name: 'Detail', params: { productId: productId.value } });
 }
 
 //处理支付方式
 const selectedMethod = ref('alipay'); // 默认选择支付宝支付
-
 const selectPayment = (method) => {
-  selectedMethod.value = method; // 更新选择的支付方式
-
+  selectedMethod.value = method; 
   // 禁用另一个支付方式盒子的点击事件
   if (method === 'alipay') {
     selectedMethod.value = 'alipay';
@@ -100,16 +80,13 @@ const selectPayment = (method) => {
   }
 };
 
-
 //处理下单&支付
 const handlePayment = async () => {
   try {
-    // 构建请求头，携带 token
     const headers = {
-      Authorization: `Bearer ${token.value}`,
+      Authorization: `Bearer ${token}`,
       'Content-type':'application/json'
     };
-
     // 收集订单数据（现在只有一个商品的购买）
     const orderData = [{
       itemId:productId,
@@ -131,10 +108,10 @@ const handlePayment = async () => {
       }
     );
     
-    ElMessage.success('下单成功！');
+    // ElMessage.success('下单成功！');
 
     // 等待 2 秒后进行支付
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // await new Promise(resolve => setTimeout(resolve, 2000));
 
     console.log('orderResponse ：',orderResponse);
     // 处理后台返回的信息
@@ -181,7 +158,7 @@ const handlePayment = async () => {
           />
           <span class="ml-22 text">Easy BUY</span>
         </div>
-        <span class="text_2">填写订单</span>
+        <span class="text_2">fill order</span>
       </div>
       <div class="mt-42 flex-row">
         <img
@@ -255,8 +232,8 @@ const handlePayment = async () => {
               class="image_5"
               src="https://ide.code.fun/api/image?token=661c9d4a955475001195f282&name=a988bd89bb5a27b71d01c75a5835daf2.png"
             />
-            <span class="ml-9"> 店铺名称: {{ productInfo.shopname }} </span>
-            
+            <!-- <span class="ml-9"> 店铺名称: {{ productInfo.shopname }} </span> -->
+            <span class="ml-9"> shop </span>
           </div>
           <div class="flex-row mt-19">
             <img class="image_7" :src="productInfo.url" />

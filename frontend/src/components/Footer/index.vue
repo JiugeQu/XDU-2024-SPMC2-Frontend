@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-30 flex-col group_2 ">
+    <div class="flex-col group_2 all">
         <div class="flex-col self-end group_9">
             <div class="flex-row justify-start items-end relative ">
                 <img
@@ -27,6 +27,11 @@ export default{
 </script>
 
 <style scoped lang="css">
+.all{
+    margin:0;
+    padding:0;
+    background-color: #cfc0c0d9;
+}
 html {
   font-size: 16px;
 }

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Header></Header>
+  <div class="all">
     <div class="product-container">
       <div v-for="(item, index) in items" :key="index" class="product-item">
         <img :src="item.url" class="product-image" @click="detail(item)" />
@@ -101,6 +102,11 @@ export default {
 </script>
 
 <style scoped>
+.all{
+    margin:0;
+    padding:0;
+    background-color: #cfc0c0d9;
+}
 .product-container {
   padding: 0 1rem; 
   margin-left:2.2rem;

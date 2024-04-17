@@ -1,5 +1,5 @@
 <template>
-<div class="flex-col page">
+<div class="flex-col page all">
       <div class="flex-row justify-end items-center">
         <div class="dropdown">
             <img
@@ -65,7 +65,12 @@ export default{
 </script>
 
 <style scoped lang="css">
+.all{
 
+    margin:0;
+    padding:0;
+    background-color: #cfc0c0d9;
+}
 html {
   font-size: 16px;
 }

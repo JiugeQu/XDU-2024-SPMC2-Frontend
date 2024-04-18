@@ -32,6 +32,7 @@ export default {
     this.getProductDetails(productId);
   },
   methods: {
+
     getProductDetails(productId) {
       const token = localStorage.getItem("token");
       // 发起请求获取商品详情

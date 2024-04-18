@@ -11,7 +11,7 @@ export default {
 </script>
 
 <template>
-  <!-- <RouterView /> -->
+ <!-- <RouterView /> -->
     <Header v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Header>
     <router-view></router-view>
     <Footer v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Footer>
@@ -23,7 +23,7 @@ export default {
   ** 否则页面将无法正常显示                                  **
   ************************************************************/
   html {
-    /* font-size: 16px; */  
+    /* font-size: 16px;   */
   }
 
   body {

@@ -15,7 +15,8 @@
               <a href="#">Seller Customer Service</a>
             </div>
         </div>
-        <a href="center">
+        <a href="/订单地址">   
+          <!-- 地址跳转    -->
           <img
             class="image ml-25"
             src="/public/image/s7.png"

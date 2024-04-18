@@ -11,10 +11,10 @@ export default {
 </script>
 
 <template>
-  <!-- <RouterView /> -->
-    <Header v-show="$route.path=='/home'||$route.path=='/detail/'"></Header>
+ <!-- <RouterView /> -->
+    <Header v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Header>
     <router-view></router-view>
-    <Footer v-show="$route.path=='/home'||$route.path=='/detail/'"></Footer>
+    <Footer v-show="$route.path=='/home'||$route.path.startsWith('/detail')"></Footer>
 </template>
 
 <style>

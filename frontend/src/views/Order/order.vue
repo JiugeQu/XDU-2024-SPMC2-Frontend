@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { ElInputNumber } from 'element-plus';
 import { reactive, onMounted, ref} from 'vue';
 
 import axios from 'axios';
@@ -8,20 +9,23 @@ import axios from 'axios';
 const route = useRoute();
 const router = useRouter();
 
-const productId = route.params.id;
 
 const token = localStorage.getItem('token');
+const productId = route.params.id;
 
-//商品信息
-const productInfo = reactive({
-  title: '',
-  description: '',
-  price: 0,
-  stock:0,
-  shopname: '',
-  url: '',
-  sellerId:0
-});
+
+// //商品信息
+// const productInfo = reactive({
+//   title: '',
+//   description: '',
+//   price: 0,
+//   stock:0,
+//   shopname: '',
+//   url: '',
+//   sellerId:0
+// });
+
+const productInfo = reactive({});
 
 //订单信息
 const data = reactive({
@@ -37,14 +41,13 @@ const quantity = ref(1);
 //挂载时获取商品信息展示在页面的商品详情处
 onMounted(async () => {
   try {
-    
     const itemResponse = await axios.get(
-      `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,{ headers: { Authorization: `Bearer ${token}` }}
+      `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,{ 
+        headers: { Authorization: `Bearer ${token}` 
+        }
+      });
 
-    );
-    console.log('商品id：',productId);
     const productData = itemResponse.data.data;
-
     productInfo.name = productData.title;
     productInfo.description = productData.description;
     productInfo.price = productData.price;
@@ -52,19 +55,20 @@ onMounted(async () => {
     productInfo.pictureUrl = productData.url;
     productInfo.stock = productData.stock;
     productInfo.sellerId = productData.sellerId;
+
     console.log('商品信息：',productData);
 
     // 动态设置 el-input-number 组件的最大值为商品库存
-    const inputNumberElement = document.querySelector('.custom-input.el-input-number__input');
+    const inputNumberElement = document.querySelector('.custom-input');
     inputNumberElement.setAttribute('max', productData.stock);
    
   } catch (error) {
     console.error('Error fetching product details:', error);
   }
-  
 });
 
 function onClick() {
+  console.log("返回详情页");
   router.push({ name: 'Detail', params: { productId: productId.value } });
 }
 
@@ -108,35 +112,38 @@ const handlePayment = async () => {
       }
     );
     
-    // ElMessage.success('下单成功！');
+    ElMessage.success('下单成功！');
 
-    // 等待 2 秒后进行支付
-    // await new Promise(resolve => setTimeout(resolve, 2000));
+    // 等待 0.5 秒后进行支付
+    await new Promise(resolve => setTimeout(resolve, 500));
 
     console.log('orderResponse ：',orderResponse);
-    // 处理后台返回的信息
+    // 处理后台返回的信息给支付接口
     const traceNo = orderResponse.data.traceNo; 
     const totalAmount = orderResponse.data.totalAmount;
     const subject = orderResponse.data.subject; 
-    
+
     // 支付接口的参数对象
     const paymentParams = {
       traceNo: traceNo, 
       totalAmount: totalAmount,
-      subject: encodeURIComponent(subject) 
+      // subject: payRequestData.encodeURIComponent(subject) 
+      subject: subject
     };
-
 
      //发送请求到支付接口
     const paymentResponse = await axios.get('http://127.0.0.1:4523/m1/4275135-0-default/pay/create',  { 
       params: paymentParams , 
-      headers:{responseType: 'text' }
+      headers:{
+         Authorization: `Bearer ${token}`
+      },
+      responseType: 'text' 
       });
+
     //获取返回的支付页面的HTML内容
     const paymentHtml = paymentResponse.data;
     console.log('调用接口获得的内容：',paymentHtml);
     // 打开新的窗口，并将支付页面的 HTML 内容加载到新窗口中
-    
     const paymentWindow = window.open('', '_blank');
     paymentWindow.document.write(paymentHtml);
 
@@ -154,7 +161,7 @@ const handlePayment = async () => {
         <div class="flex-row items-end pos">
           <img
               class="shrink-0 image"
-              src="https://ide.code.fun/api/image?token=661c9b87955475001195f22d&name=1a78ac75b92cfd52cb8e19e0c3a8e00a.png"
+              src="/public/image/s1.png"
           />
           <span class="ml-22 text">Easy BUY</span>
         </div>
@@ -163,7 +170,7 @@ const handlePayment = async () => {
       <div class="mt-42 flex-row">
         <img
           class="image_2"
-          src="https://ide.code.fun/api/image?token=661c9b87955475001195f22d&name=60274a898e2131baf2769c5a294e5313.png"
+          src="/src/assets/return.png"
           alt="Description of the image2"
           @click="onClick"
         />
@@ -180,9 +187,9 @@ const handlePayment = async () => {
           <div class="flex-row items-center">
             <img
                 class="shrink-0 image_3"
-                src="https://ide.code.fun/api/image?token=661c9d4a955475001195f282&name=885a621e9694e941c3b9656fa0d462a9.png"
+                src="/src/assets/address.png"
             />
-            <span class="font_2 text_5 ">收货地址：</span>
+            <span class="font_2 text_5 ">address:</span>
             <div class="input-wrapper">
         <input
             v-model="data.address"
@@ -196,9 +203,9 @@ const handlePayment = async () => {
           <div class="mt-22 flex-row items-center">
             <img
                 class="shrink-0 image_3"
-                src="https://ide.code.fun/api/image?token=661c9b87955475001195f22d&name=e21908ba45a4b85d7239dc8d96ac8a7b.png"
+                src="/src/assets/profltPhoto.png"
             />
-            <span class="font_2 text_8">收货人：</span>
+            <span class="font_2 text_8">consignee:</span>
               <div class="input-wrapper">
                 <input
                   v-model="data.consignee"
@@ -211,9 +218,8 @@ const handlePayment = async () => {
           <div class="mt-22 flex-row items-center">
             <img
                 class="shrink-0 image_4"
-                src="https://ide.code.fun/api/image?token=661c9b87955475001195f22d&name=5a528b7f71b133d5c9c8f1e47270dcd7.png"
-            />
-            <span class="font_2 text_10 ">联系电话：</span>
+                src="/src/assets/telephone.png">
+            <span class="font_2 text_10 ">phonenumber:</span>
               <div class="input-wrapper">
                 <input
                     v-model="data.phonenumber"
@@ -230,13 +236,13 @@ const handlePayment = async () => {
           <div class="flex-row items-center">
             <img
               class="image_5"
-              src="https://ide.code.fun/api/image?token=661c9d4a955475001195f282&name=a988bd89bb5a27b71d01c75a5835daf2.png"
+              src="/src/assets/shop.png"
             />
             <!-- <span class="ml-9"> 店铺名称: {{ productInfo.shopname }} </span> -->
             <span class="ml-9"> shop </span>
           </div>
           <div class="flex-row mt-19">
-            <img class="image_7" :src="productInfo.url" />
+            <img class="image_7" :src="productInfo.url" alt="Product Image"/>
             <div class="flex-col self-start group_5 ml-4">
               <div class="flex-col items-start self-stretch">
                 <span class="text_12">{{ productInfo.title }}</span>  
@@ -244,14 +250,11 @@ const handlePayment = async () => {
                   {{ productInfo.description }}
                 </span>
                 <br />
-                <span class="ml-9">商品库存：{{ productInfo.stock-quantity }}</span>
+                <span class="ml-9">stock:{{ productInfo.stock-quantity }}</span>
               </div>
               <div class="flex-row items-center mt-10">
                 <span class="font text_14 mr-4">￥{{ productInfo.price }}</span>
-                 <div class="custom-input el-input-number__input">
-                  <!-- 最小值设为1会出现问题 -->
-                    <el-input-number v-model="quantity" :min="0" :max="productInfo.stock" label="数量"></el-input-number>
-                </div>
+                <el-input-number v-model="quantity" :min="0" :max="productInfo.stock" class="custom-input"></el-input-number>
               </div>
             </div>
           </div>
@@ -259,7 +262,7 @@ const handlePayment = async () => {
 
         <!-- 支付方式选择，默认选择支付宝支付-->
         <div class="flex-row items-center group_7">
-    <span class="font_2 text_16">支付方式：</span>
+    <span class="font_2 text_16">payment</span>
     <div class="flex-row equal-division ml-5">
       <!-- 支付宝支付 -->
       <div class="pay-box flex-row justify-between items-center equal-division-item section" @click="selectPayment('alipay')" :class="{ 'selected': selectedMethod === 'alipay' }">
@@ -269,32 +272,32 @@ const handlePayment = async () => {
               <div class="flex-col justify-start section_4">
                 <div class="flex-col justify-start section_4">
                   <div class="flex-col justify-start items-center section_4">
-                    <img class="image_9" src="https://ide.code.fun/api/image?token=661c9d4a955475001195f282&name=9de6439363b41d01b97cfa8fe9e78469.png">
+                    <img class="image_9" src="/src/assets/alipay.png">
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <span class="font_3 text_17">支付宝支付</span>
+        <span class="font_3 text_17">Alipay</span>
       </div>
 
       <!-- 微信支付 -->
       <div class="pay-box flex-row justify-between equal-division-item section_2 ml-19" @click="selectPayment('wechat')" :class="{ 'selected': selectedMethod === 'wechat' }">
-        <img class="self-center image_10" src="https://ide.code.fun/api/image?token=661c9d4a955475001195f282&name=c1b42a4262a094a58c7b4a1471945e58.png">
-        <span class="self-start font_3 text_18">微信支付</span>
+        <img class="self-center image_10" src="/src/assets/wechat.png">
+        <span class="self-start font_3 text_18">WeChat</span>
       </div>
     </div>
   </div>
         <!-- 付款 -->
         <div class="flex-col group_8">
           <div class="flex-row">
-            <el-button @click="handlePayment" type="primary" class="text_19 flex-item text-wrapper_4">
-              确认付款
-            </el-button>
+            <button @click="handlePayment" type="primary" class="text_19 flex-item text-wrapper_4">
+              confirm payment
+            </button>
           </div>
           <div class="flex-row">
-            <el-button class="text_20 flex-item text-wrapper_5 mt-23"> 取消订单 </el-button>
+            <button class="text_20 flex-item text-wrapper_5 mt-23"> cancel order </button>
           </div>
         </div>
       </div>
@@ -304,10 +307,16 @@ const handlePayment = async () => {
 
 <style scoped lang="css">
 
-
-.custom-input .el-input-number__input {
-  width: 100px;
+.custom-input {
+    display: flex;
+    align-items: center;
 }
+/* 调整按钮的样式 */
+.el-input-number__decrease,
+.el-input-number__increase {
+    margin: 0;
+}
+
 .selected {
   pointer-events: none; /* 禁用鼠标事件 */
   box-shadow: 0 0 10px rgba(0, 140, 255, 0.5);
@@ -452,7 +461,7 @@ const handlePayment = async () => {
   color: #000000;
 }
 .text_5 {
-  margin-left: 0.69rem;
+  margin-left: 4rem;
 }
 .view {
   margin-right: 0.38rem;
@@ -470,7 +479,7 @@ const handlePayment = async () => {
   line-height: 1.05rem;
 }
 .text_8 {
-  margin-left: 1.8rem;
+  margin-left: 2.7rem;
 }
 .view_2 {
   margin-left: 1.15rem;

@@ -1,7 +1,7 @@
 <script setup>
   import { useRouter } from 'vue-router';
   import { reactive, onMounted } from 'vue';
-  import { ref } from 'vue';
+  import { ref } from 'vue';//使用ref
 
   const props = defineProps({});
 

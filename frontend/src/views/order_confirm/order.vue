@@ -1,12 +1,67 @@
 <script setup>
   import { useRouter } from 'vue-router';
   import { reactive, onMounted } from 'vue';
+  import { ref } from 'vue';
 
   const props = defineProps({});
 
-  const data = reactive({});
+  // const data = reactive({});
+  // 定义组件的反应性数据
+  let imageUrl = ref('');//商品图片
+  let productName= ref('');//商品名称
+  let productDescription= ref('');//商品描述
+  let price= ref('');//价格
+  let ordernum= ref('');//数量
+  let totalPrice= ref('');//实付款金额
+  let orderNumber= ref('');//订单编号
+  let createTime= ref('');//订单创建时间
+  // const paymentTime= '';//付款时间
+  // const deliveryTime= '';//发货时间
 
-const confirmReceipt = async () => {
+// 在组件挂载后立即执行的函数
+onMounted(() => {
+  const token = localStorage.getItem("token"); // 替换为实际的Token
+  const status = '300'; 
+  // 准备 API 请求的 URL 
+  const url = `http://127.0.0.1:4523/m1/4275135-0-default/order/buyer/lastorder?status=${status}`;
+
+  // 发起 GET 请求
+  fetch(url,{
+    method:'get',
+    headers: {
+        'Authorization': `Bearer ${token}`
+      }
+  })
+    .then(response => response.json())
+    .then(responseData => {
+      // 检查是否有数据返回
+      if ( responseData.data && responseData.data.length > 0) {
+        // 假设只返回了一笔订单数据，取第一笔数据进行处理
+        const orderData = responseData.data[0];
+        const contentData = orderData.content[0]; // 确保这里取第一项
+        
+        // 更新页面上的内容
+        imageUrl.value = contentData.imgUrl; // 使用.ref()
+        productName.value = contentData.itemId; // 使用.ref()
+        productDescription.value = contentData.itemDesc; // 使用.ref()
+        price.value = contentData.unitPrice; // 使用.ref()
+        ordernum.value = contentData.quantity; // 使用.ref()
+        totalPrice.value = contentData.subtotal; // 使用.ref()
+        orderNumber.value = orderData.id; // 使用.ref()
+        createTime.value = orderData.ctime; // 使用.ref() 
+        // paymentTime = ''; // 可根据需要更新
+        // deliveryTime = ''; // 可根据需要更新
+      } else {
+        // 处理未找到订单数据的情况
+        console.error('No order data found');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+});
+
+  const confirmReceipt = async () => {
   // const { token } = request;
   const token = localStorage.getItem("token");
   const orderId = 3; // 这里可以是你的订单ID变量
@@ -61,14 +116,11 @@ const confirmReceipt = async () => {
             />
           </div>
           <div class="flex-row mt-9-5">
-            <img
-              class="image_4"
-              src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=2572e7c44ae2f095cd047078568ddf3c.png"
-            />
+            <img class="image_4" :src="imageUrl" />
             <div class="flex-col items-start self-start group_4">
-              <span class="text_3">万家全特色披萨</span>
-              <span class="text_4">榴莲味 6寸</span>
-              <span class="text_5">$99.99</span>
+              <span class="text_3">{{ productName }}</span>
+              <span class="text_4">{{ productDescription }}</span>
+              <span class="text_5">{{ price }}</span>
             </div>
             <div class="flex-row items-center self-start group_5">
               <img
@@ -76,7 +128,7 @@ const confirmReceipt = async () => {
                 src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=9ea09a41778fe655cce7f5f8b4530738.png"
               />
               <div class="ml-12 flex-col justify-start items-center text-wrapper">
-                <span class="font_2 text_6">2</span>
+                <span class="font_2 text_6">{{ ordernum }}</span>
               </div>
               <img
                 class="ml-12 image_5"
@@ -88,12 +140,12 @@ const confirmReceipt = async () => {
         <div class="flex-col mt-90-5">
           <div class="flex-row justify-between items-baseline group_6">
             <span class="font_3">实付款：</span>
-            <span class="text_7">￥99.99</span>
+            <span class="text_7">{{ totalPrice }}￥</span>
           </div>
           <div class="flex-row justify-between group_7">
             <span class="self-start font_3 text_10">订单编号：</span>
             <div class="flex-row items-center self-center group_8">
-              <span class="font_4 text_9">352181844155151545545</span>
+              <span class="font_4 text_9">{{orderNumber}}</span>
               <!-- <span class="font_4 text_9">{{ orderNumber }}</span> -->
               <div class="shrink-0 section_2"></div>
               <span class="text_8">复制</span>
@@ -101,15 +153,15 @@ const confirmReceipt = async () => {
           </div>
           <div class="flex-row justify-between items-center group_9">
             <span class="font_3 text_11">创建时间：</span>
-            <span class="font_4 text_12">2024-04-22 15:15</span>
+            <span class="font_4 text_12">{{ createTime }}</span>
           </div>
           <div class="flex-col group_10">
             <span class="self-start font_3 text_13">付款时间：</span>
-            <span class="self-end font_4 text_12 text_14">2024-04-22 15:25</span>
+            <span class="self-end font_4 text_12 text_14">**/**/**</span>
           </div>
           <div class="flex-row justify-between items-center group_11">
             <span class="font_3">发货时间：</span>
-            <span class="font_4 text_12">2024-04-25 18:15</span>
+            <span class="font_4 text_12">**/**/**</span>
           </div>
         </div>
       </div>

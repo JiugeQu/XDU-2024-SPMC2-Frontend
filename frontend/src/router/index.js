@@ -5,6 +5,8 @@ import Home from '../views/Home/home.vue';
 import Detail from '../views/Details/detail.vue';
 import Order from '../views/Order/order.vue';
 import Order_confirm from '../views/order_confirm/order_confirm.vue';
+import Goods from '../views/Goods/Goods.vue';
+import Delivers from '../views/Delivers/Delivers.vue';
 
 const routes = [
   {
@@ -36,6 +38,16 @@ const routes = [
     path: '/order_confirm',
     name: 'order_confirm',
     component: Order_confirm,
+  },
+  {
+    path: '/goods',
+    name: 'goods',
+    component: Goods,
+  },
+  {
+    path: '/delivers',
+    name: 'delivers',
+    component: Delivers,
   },
 ];
 

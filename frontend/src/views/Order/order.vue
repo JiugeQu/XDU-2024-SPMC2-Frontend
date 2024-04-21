@@ -60,7 +60,7 @@ onMounted(async () => {
 
     // 动态设置 el-input-number 组件的最大值为商品库存
     const inputNumberElement = document.querySelector('.custom-input');
-    inputNumberElement.setAttribute('max', productData.stock);
+    inputNumberElement.setAttribute('max', productInfo.stock);
    
   } catch (error) {
     console.error('Error fetching product details:', error);
@@ -84,74 +84,120 @@ const selectPayment = (method) => {
   }
 };
 
-//处理下单&支付
+//处理下单
 const handlePayment = async () => {
   try {
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-type':'application/json'
     };
-    // 收集订单数据（现在只有一个商品的购买）
+    
+    //收集订单数据
     const orderData = [{
-      itemId:productId,
+      itemId: productId,
       quantity: quantity.value,
-      unitPrice:productInfo.price,
+      unitPrice: productInfo.price,
       address: data.address,
       consignee: data.consignee,
-      phonenumber:data.phonenumber,
-      sellerId:productInfo.sellerId,
+      phonenumber: data.phonenumber,
+      sellerId: productInfo.sellerId,
     }];
-    console.log('订单数据：',orderData)
 
-    // 发送订单数据到后台请求生成订单
+    console.log('Order Data:', orderData);
+
+    //下单接口
     const orderResponse = await axios.post(
-      'http://127.0.0.1:4523/m1/4275135-0-default/order?apifoxResponseId=432192742',
+      'http://127.0.0.1:4523/m1/4275135-0-default/order',
       orderData,
-      {
-        headers//请求头中携带token
-      }
+      { headers }
     );
     
-    ElMessage.success('下单成功！');
-
-    // 等待 0.5 秒后进行支付
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    console.log('orderResponse ：',orderResponse);
-    // 处理后台返回的信息给支付接口
-    const traceNo = orderResponse.data.traceNo; 
-    const totalAmount = orderResponse.data.totalAmount;
-    const subject = orderResponse.data.subject; 
-
-    // 支付接口的参数对象
-    const paymentParams = {
-      traceNo: traceNo, 
-      totalAmount: totalAmount,
-      // subject: payRequestData.encodeURIComponent(subject) 
-      subject: subject
-    };
-
-     //发送请求到支付接口
-    const paymentResponse = await axios.get('http://127.0.0.1:4523/m1/4275135-0-default/pay/create',  { 
-      params: paymentParams , 
-      headers:{
-         Authorization: `Bearer ${token}`
-      },
-      responseType: 'text' 
-      });
-
-    //获取返回的支付页面的HTML内容
-    const paymentHtml = paymentResponse.data;
-    console.log('调用接口获得的内容：',paymentHtml);
-    // 打开新的窗口，并将支付页面的 HTML 内容加载到新窗口中
-    const paymentWindow = window.open('', '_blank');
-    paymentWindow.document.write(paymentHtml);
+    //检查是否下单成功
+    if (orderResponse.status === 200) {
+      const { traceNo, totalAmount, subject } = orderResponse.data;
+      // Redirect to payment page with order data as URL parameters
+      console.log("pay参数：",orderResponse.data)
+      window.location.href = `/pay?traceNo=${traceNo}&totalAmount=${totalAmount}&subject=${subject}`;
+      console.log("跳转支付界面")
+    } else {
+      throw new Error('Failed to place order');
+    }
 
   } catch (error) {
-    console.error('Failed to pay:', error);
-    ElMessage.error('下单失败或支付失败，请重试。');
+    console.error('Failed to place order:', error);
+    alert('Failed to place order. Please try again.');
   }
 };
+// //处理下单&支付
+// const handlePayment = async () => {
+//   try {
+//     const headers = {
+//       Authorization: `Bearer ${token}`,
+//       'Content-type':'application/json'
+//     };
+//     // 收集订单数据（现在只有一个商品的购买）
+//     const orderData = [{
+//       itemId:productId,
+//       quantity: quantity.value,
+//       unitPrice:productInfo.price,
+//       address: data.address,
+//       consignee: data.consignee,
+//       phonenumber:data.phonenumber,
+//       sellerId:productInfo.sellerId,
+//     }];
+//     console.log('订单数据：',orderData)
+
+//     // 发送订单数据到后台请求生成订单
+//     const orderResponse = await axios.post(
+//       'http://127.0.0.1:4523/m1/4275135-0-default/order',
+//       orderData,
+//       {
+//         headers//请求头中携带token
+//       }
+//     );
+    
+//     //弹窗显示下单成功，增加一个支付按钮，点击这个进行支付
+//      alert("Order Successfully");
+//     // ElMessage.success('下单成功！');
+
+//     // 等待 0.5 秒后进行支付
+//     // await new Promise(resolve => setTimeout(resolve, 500));
+
+//     console.log('orderResponse ：',orderResponse);
+//     // 处理后台返回的信息给支付接口
+//     const traceNo = orderResponse.data.traceNo; 
+//     const totalAmount = orderResponse.data.totalAmount;
+//     const subject = orderResponse.data.subject; 
+
+//     // 支付接口的参数对象
+//     const paymentParams = {
+//       traceNo: traceNo, 
+//       totalAmount: totalAmount,
+//       // subject: payRequestData.encodeURIComponent(subject) 
+//       subject: subject
+//     };
+
+// //      //发送请求到支付接口
+// //     const paymentResponse = await axios.get('http://127.0.0.1:4523/m1/4275135-0-default/pay/create',  { 
+// //       params: paymentParams , 
+// //       headers:{
+// //          Authorization: `Bearer ${token}`
+// //       },
+// //       responseType: 'text' 
+// //       });
+
+// //     //获取返回的支付页面的HTML内容
+// //     const paymentHtml = paymentResponse.data;
+// //     console.log('调用接口获得的内容：',paymentHtml);
+// //     // 打开新的窗口，并将支付页面的 HTML 内容加载到新窗口中
+// //     const paymentWindow = window.open('', '_blank');
+// //     paymentWindow.document.write(paymentHtml);
+
+// //   } catch (error) {
+// //     console.error('Failed to pay:', error);
+// //     ElMessage.error('下单失败或支付失败，请重试。');
+// //   }
+// // };
 </script>
 
 <template>

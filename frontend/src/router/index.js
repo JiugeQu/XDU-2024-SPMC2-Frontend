@@ -4,6 +4,7 @@ import Register from '../views/register.vue';
 import Home from '../views/Home/home.vue';
 import Detail from '../views/Details/detail.vue';
 import Order from '../views/Order/order.vue'
+import Pay from '../views/pay/pay.vue'
 
 const routes = [
   {
@@ -31,6 +32,12 @@ const routes = [
     name: 'order',
     component: Order,
   },
+  {
+    path: '/pay',
+    name: 'pay',
+    component: Pay,
+  },
+
 ];
 
 const router = createRouter({

@@ -51,7 +51,7 @@ onMounted(async () => {
     productInfo.name = productData.title;
     productInfo.description = productData.description;
     productInfo.price = productData.price;
-    productInfo.shopname = productData.sellerId;
+    // productInfo.shopname = productData.sellerId;
     productInfo.pictureUrl = productData.url;
     productInfo.stock = productData.stock;
     productInfo.sellerId = productData.sellerId;
@@ -242,10 +242,10 @@ const handlePayment = async () => {
             <span class="ml-9"> shop </span>
           </div>
           <div class="flex-row mt-19">
-            <img class="image_7" :src="productInfo.url" alt="Product Image"/>
+            <img class="image_7" :src="productInfo.pictureUrl" alt="Product Image"/>
             <div class="flex-col self-start group_5 ml-4">
               <div class="flex-col items-start self-stretch">
-                <span class="text_12">{{ productInfo.title }}</span>  
+                <span class="text_12">{{ productInfo.name }}</span>  
                 <span class="mt-14 font_3 text_13" >
                   {{ productInfo.description }}
                 </span>

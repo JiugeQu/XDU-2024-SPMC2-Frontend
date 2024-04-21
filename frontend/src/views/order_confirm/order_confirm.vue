@@ -100,7 +100,9 @@ onMounted(() => {
         class="image"
         src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=60274a898e2131baf2769c5a294e5313.png"
       />
-      <span class="font_2 ml-7-5">Return</span>
+      <router-link :to="{ path: '/home', query: { id: $route.query.id } }">
+        <span class="font_2 ml-7-5 ">Return</span>
+      </router-link>     
     </div>
     <div class="flex-col self-stretch group_3">
       <div class="flex-col section">

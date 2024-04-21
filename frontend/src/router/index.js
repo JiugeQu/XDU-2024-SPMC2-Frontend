@@ -3,8 +3,11 @@ import Login from '../views/login.vue';
 import Register from '../views/register.vue';
 import Home from '../views/Home/home.vue';
 import Detail from '../views/Details/detail.vue';
-import Order from '../views/Order/order.vue'
 import Pay from '../views/pay/pay.vue'
+import Order from '../views/Order/order.vue';
+import Order_confirm from '../views/order_confirm/order_confirm.vue';
+import Goods from '../views/Goods/Goods.vue';
+import Delivers from '../views/Delivers/Delivers.vue';
 
 const routes = [
   {
@@ -33,11 +36,26 @@ const routes = [
     component: Order,
   },
   {
+
     path: '/pay',
     name: 'pay',
     component: Pay,
   },
 
+    path: '/order_confirm',
+    name: 'order_confirm',
+    component: Order_confirm,
+  },
+  {
+    path: '/goods',
+    name: 'goods',
+    component: Goods,
+  },
+  {
+    path: '/delivers',
+    name: 'delivers',
+    component: Delivers,
+  },
 ];
 
 const router = createRouter({

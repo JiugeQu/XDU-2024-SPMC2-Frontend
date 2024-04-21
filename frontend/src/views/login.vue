@@ -1,4 +1,46 @@
 <script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router'; // 导入 useRouter 函数
+
+// 创建响应式变量，用于存储用户名和密码
+const username = ref('<username>');
+const password = ref('<password>');
+  
+// 获取 Router 实例
+const router = useRouter();
+
+// 点击按钮时触发的登录函数
+const login = () => {
+  // 创建FormData实例并设置用户名和密码
+  const formData = new FormData();
+  formData.append('username', username.value);
+  formData.append('password', password.value);
+  const config = {
+    method: 'post',
+    // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
+    url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
+    data: formData
+  };
+
+  // 发送请求
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      console.log(response.data.status);
+      if(response.data.status == 0){
+        // 使用 router.push 进行导航
+        router.push({ path: "/home", query: { id: response.data.id } });
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+</script>
+
+
+<!-- <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
   import FormData from 'form-data'; // 导入FormData模块
@@ -6,12 +48,11 @@
     // 创建响应式变量，用于存储用户名和密码
     const username = ref('<username>');
     const password = ref('<password>');
-
+      
     // 点击按钮时触发的登录函数
     const login = () => {
       // 创建FormData实例并设置用户名和密码
       const formData = new FormData();
-      let that=this;
       formData.append('username', username.value);
       formData.append('password', password.value);
       const config = {
@@ -25,17 +66,18 @@
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        if(response.data.statu==0){
-          that.$router.push({path:"/home"+id});
+        console.log(response.data.status);
+        if(response.data.status==0){
+          this.$router.push({path:"/home"+response.data.id});
+          console.log(response.data.id);
         }
       })
       .catch(function (error) {
         console.log(error);
       });
 
-    
-  };
-</script>
+    }
+</script> -->
 
 <!-- <script setup>
   import { ref } from 'vue';

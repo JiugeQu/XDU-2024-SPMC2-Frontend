@@ -528,11 +528,12 @@ const selectOption = (optionText) => {
 </script>
   
   
-  <style>
+  <style scoped>
   .image-wrapper_4 {
     position: relative;
     /* 使选项列表可以相对于此容器定位 */
     /* 保留您原有的样式 */
+    
     padding: 0.92rem 0 0.77rem;
     background-color: #ffffff;
     border-radius: 0.13rem;

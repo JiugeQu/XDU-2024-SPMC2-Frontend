@@ -29,9 +29,7 @@ function processInputs() {
 
 
     var myHeaders = new Headers();
-
-    const token = localStorage.getItem("token");
-      myHeaders.append("token", token);
+      myHeaders.append("token", "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoxLCJpZCI6MSwidXNlcm5hbWUiOiJtaXpvcmUiLCJleHAiOjE3MjE2NjcyMjF9.i-BwwKlGD6Efo1FsoK7PPQOmiV2cdNoilwcQU-fCFIc");
       myHeaders.append("User-Agent", "Apifox/1.0.0 (https://apifox.com)");
       myHeaders.append("Content-Type", "application/json");
 
@@ -67,58 +65,15 @@ function processInputs() {
 
 
 
-// 获取按钮元素和文件上传输入
-var buttonAddImage = document.getElementById('ButtonAddImage');
-var fileInput = document.getElementById('fileInput');
-var uploadedImage = document.getElementById('uploadedImage');
 
-// 添加点击事件监听器
-buttonAddImage.addEventListener('click', function() {
-    // 触发隐藏文件上传输入的点击事件
-    fileInput.click();
-});
-
-// 添加文件上传输入的change事件监听器
-fileInput.addEventListener('change', function() {
-    // 处理文件上传的逻辑
-    var file = fileInput.files[0];
-    if (file) {
-        // 读取文件数据并设置图片源
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            uploadedImage.src = e.target.result;
-            uploadedImage.style.display = 'block'; // 显示上传的图片
-            buttonAddImage.style.display = 'none'; // 隐藏上传按钮
-            resizeImage(uploadedImage, 100); // 调用resizeImage函数将图片大小调整为200px
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// 添加点击图片覆盖的功能
-uploadedImage.addEventListener('click', function() {
-    fileInput.click();
-});
-
-// 函数用于调整图片大小
-function resizeImage(img, maxHeight) {
-    var ratio = maxHeight / img.height;
-    var newWidth = img.width * ratio;
-    if (newWidth > maxHeight) {
-        newWidth = maxHeight;
-        ratio = newWidth / img.width;
-    }
-    img.style.width = newWidth + "px";
-    img.style.height = (img.height * ratio) + "px";
-}
 
 
 
 function redirectToOtherPageMANAGEMENT() {
+    // 设置目标页面的URL
+    var targetURL = "http://localhost:8081/login/";
     
-    var targetURL = "http://localhost:5173/home";
-    
-  
+    // 使用window.location.href实现跳转
     window.location.href = targetURL;
 }
 
@@ -126,9 +81,9 @@ function redirectToOtherPageMANAGEMENT() {
 
 
 function redirectToOtherPageRETURN() {
- 
-    var targetURL = "https://www.baidu.com/";
+    // // 设置目标页面的URL
+    // var targetURL = "https://www.baidu.com/";
     
-    
-    window.location.href = targetURL;
+    // // 使用window.location.href实现跳转
+    // window.location.href = targetURL;
 }

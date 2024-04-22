@@ -79,7 +79,7 @@ function processInputs() {
 
 
     //发送返回的图片地址给原来的后端接口
-    const url2 = "https://mock.apifox.com/m1/4275135-3917058-default/item?images="+returnimageUrl;
+    const url2 = "https://localhost:8081/item?images="+returnimageUrl;
 
     console.log("url2："+url2);
     var myHeaders2 = new Headers();
@@ -126,7 +126,7 @@ function processInputs() {
 
 function redirectToOtherPageMANAGEMENT() {
     // 设置目标页面的URL
-    var targetURL = "http://localhost:5173/login/";
+    var targetURL = "http://localhost:8081/login/";
     
     // 使用window.location.href实现跳转
     window.location.href = targetURL;

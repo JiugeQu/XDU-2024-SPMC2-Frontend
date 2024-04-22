@@ -77,12 +77,12 @@ onMounted(() => {
 
     if (response.ok) {
       // 修改本地状态或者进行其他操作
-      console.log('订单确认成功');
+      console.log('Order confirmed successfully');
     } else {
-      console.error('订单确认失败');
+      console.error('Order confirmation failed');
     }
   } catch (error) {
-    console.error('网络错误', error);
+    console.error('Network Error', error);
   }
 };
 
@@ -92,13 +92,13 @@ onMounted(() => {
   <div class="flex-col page">
     <div class="flex-col self-start group">
       <span class="self-start text_2">Easy BUY</span>
-      <span class="self-end font text">待收货</span>
+      <span class="self-end font text">Awaiting receipt</span>
     </div>
     <div class="self-start divider"></div>
     <div class="flex-row self-stretch group_2">
       <img
         class="image"
-        src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=60274a898e2131baf2769c5a294e5313.png"
+        src="../assets/return.png"
       />
       <router-link :to="{ path: '/home', query: { id: $route.query.id } }">
         <span class="font_2 ml-7-5 ">Return</span>
@@ -110,12 +110,12 @@ onMounted(() => {
           <div class="flex-row items-center">
             <img
               class="image_2"
-              src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=a988bd89bb5a27b71d01c75a5835daf2.png"
+              src="../../assets/shop_c.png"
             />
-            <img
+            <!-- <img
               class="image_3 ml-4-5"
               src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=cab6db709e62b9526ce8aa33823982db.png"
-            />
+            /> -->
           </div>
           <div class="flex-row mt-9-5">
             <img class="image_4" :src="imageUrl" />
@@ -127,77 +127,77 @@ onMounted(() => {
             <div class="flex-row items-center self-start group_5">
               <img
                 class="image_5"
-                src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=9ea09a41778fe655cce7f5f8b4530738.png"
+                src="../../assets/-_c.png"
               />
               <div class="ml-12 flex-col justify-start items-center text-wrapper">
                 <span class="font_2 text_6">{{ ordernum }}</span>
               </div>
               <img
                 class="ml-12 image_5"
-                src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=8846157e5b42c2b194957390eafe4c46.png"
+                src="../../assets/+_c.png"
               />
             </div>
           </div>
         </div>
         <div class="flex-col mt-90-5">
           <div class="flex-row justify-between items-baseline group_6">
-            <span class="font_3">实付款：</span>
+            <span class="font_3">Real payment:</span>
             <span class="text_7">{{ totalPrice }}￥</span>
           </div>
           <div class="flex-row justify-between group_7">
-            <span class="self-start font_3 text_10">订单编号：</span>
+            <span class="self-start font_3 text_10">Order number:</span>
             <div class="flex-row items-center self-center group_8">
               <span class="font_4 text_9">{{orderNumber}}</span>
               <!-- <span class="font_4 text_9">{{ orderNumber }}</span> -->
               <div class="shrink-0 section_2"></div>
-              <span class="text_8">复制</span>
+              <span class="text_8">copy</span>
             </div>
           </div>
           <div class="flex-row justify-between items-center group_9">
-            <span class="font_3 text_11">创建时间：</span>
+            <span class="font_3 text_11">Creation time:</span>
             <span class="font_4 text_12">{{ createTime }}</span>
           </div>
           <div class="flex-col group_10">
-            <span class="self-start font_3 text_13">付款时间：</span>
+            <span class="self-start font_3 text_13">Payment time:</span>
             <span class="self-end font_4 text_12 text_14">**/**/**</span>
           </div>
           <div class="flex-row justify-between items-center group_11">
-            <span class="font_3">发货时间：</span>
+            <span class="font_3">Shipping time:</span>
             <span class="font_4 text_12">**/**/**</span>
           </div>
         </div>
       </div>
       <div class="flex-col section_3 mt-8-5">
-        <span class="self-start font text_15">遇到问题？</span>
+        <span class="self-start font text_15">Encounter problems?</span>
         <div class="flex-row justify-between equal-division group_12 mt-13-5">
           <div class="flex-row items-center">
             <img
               class="shrink-0 image_6"
-              src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=072c27304bb72188435bef7d21cc2b08.png"
+              src="../../assets/contact_c.png"
             />
-            <span class="ml-22 font">联系卖家</span>
+            <span class="ml-22 font">Contact seller</span>
           </div>
           <div class="flex-row items-center">
             <img
               class="shrink-0 image_6"
-              src="https://ide.code.fun/api/image?token=661f7469955475001196c369&name=505bb5e00e134e6c5f187c8012c24f9b.png"
+              src="../../assets/complaint_c.png"
             />
-            <span class="font ml-9-5">投诉卖家</span>
+            <span class="font ml-9-5">Complaints seller</span>
           </div>
         </div>
       </div>
       <div class="flex-row justify-end section_4 mt-8-5">
         <div class="flex-col justify-start items-center text-wrapper_2">
-          <span class="font_3 text_16">查看物流</span>
+          <span class="font_3 text_16">Check logistics</span>
         </div>
         <div class="ml-12 flex-col justify-start items-center text-wrapper_2">
-          <span class="font_3 text_17">延长收货</span>
+          <span class="font_3 text_17">Extend delivery</span>
         </div>
 
         <div>
       <!-- 确认收货按钮 -->
       <div class="ml-12 flex-col justify-start items-center text-wrapper_3">
-        <button @click="confirmReceipt()" class="font_3 text_18">确认收货</button>
+        <button @click="confirmReceipt()" class="font_3 text_18">Confirm the receipt of goods</button>
         </div>
       </div>
         <!-- <div class="ml-12 flex-col justify-start items-center text-wrapper_3">

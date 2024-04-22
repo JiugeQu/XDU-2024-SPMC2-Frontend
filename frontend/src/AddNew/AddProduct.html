@@ -70,7 +70,7 @@
               />
               <span class="text_5 ml-11">ACCOUNT</span>
             </div>
-            <!--div class="flex-col self-stretch group_9 view">
+            <div class="flex-col self-stretch group_9 view">
               <div class="flex-row items-center self-stretch">
                 <img
                   class="image_13"
@@ -80,7 +80,7 @@
               </div>
               <span class="self-center font_5 text_8 mt-19">RECONCILIATIOIN</span>
               <span class="self-center font_5 mt-19">SETTLEMENT</span>
-            </div-->
+            </div>
             <div class="flex-col self-start group_13">
               <div class="flex-row items-center self-stretch">
                 <img
@@ -92,7 +92,7 @@
               <span class="self-center font_5 text_11">MANAGEMENT</span>
               <!-- <span class="self-center font_5 text_12">RETURN</span> -->
 
-              <a class="text_1000" onclick="redirectToOtherPageRETURN()">RETURN</a>
+              <a onclick="redirectToOtherPageRETURN()">RETURN</a>
 
               <div class="flex-row items-center self-stretch group_20">
                 <img
@@ -104,13 +104,13 @@
 
 
 
-              <a class="text_1001" onclick="redirectToOtherPageMANAGEMENT()">MANAGEMENT</a>
+              <a onclick="redirectToOtherPageMANAGEMENT()">MANAGEMENT</a>
 
 
 
               <span class="self-center font_1 text_17">ADD NEW</span>
             </div>
-            <!--div class="flex-col self-stretch group_27">
+            <div class="flex-col self-stretch group_27">
               <div class="flex-row items-center self-stretch">
                 <img
                   class="image_7"
@@ -119,8 +119,8 @@
                 <span class="ml-12 font_2">SHOP</span>
               </div>
               <span class="self-center font_5 text_19 mt-25">RENOVATION</span>
-            </div-->
-            <!--div class="flex-col self-stretch group_9 view_4">
+            </div>
+            <div class="flex-col self-stretch group_9 view_4">
               <div class="flex-row items-center self-stretch">
                 <img
                   class="image_14"
@@ -129,8 +129,8 @@
                 <span class="font_2 text_21 ml-13">WITHDRAWAL</span>
               </div>
               <span class="self-center font_6 mt-21">RECORDS</span>
-            </div-->
-            <!--div class="flex-col self-stretch group_28">
+            </div>
+            <div class="flex-col self-stretch group_28">
               <div class="flex-row items-center self-stretch">
                 <img
                   class="image_7"
@@ -147,8 +147,8 @@
                 />
                 <span class="ml-16 font_2 text_15 text_24">FREIGHT</span>
               </div>
-            </div-->
-            <!--div class="flex-col self-stretch group_30">
+            </div>
+            <div class="flex-col self-stretch group_30">
               <div class="flex-row items-center self-stretch">
                 <img
                   class="image_14"
@@ -163,7 +163,7 @@
               <span class="mt-20 self-start font_6 text_27">USERS</span>
               <span class="mt-20 self-start font_6 text_28">STORE</span>
               <span class="mt-20 self-center font_6 text_29">CATEGORY</span>
-            </div-->
+            </div>
           </div>
           <div class="ml-14 flex-col items-center self-start group_4">
             
@@ -196,6 +196,59 @@
                     <button class="transparent-button2" id="ButtonAddImage">Add Image</button>
                     
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
+
+
+                    <script>
+
+                      // 获取按钮元素和文件上传输入
+                      var buttonAddImage = document.getElementById('ButtonAddImage');
+                    var fileInput = document.getElementById('fileInput');
+                    var uploadedImage = document.getElementById('uploadedImage');
+                    
+                    // 添加点击事件监听器
+                    buttonAddImage.addEventListener('click', function() {
+                        // 触发隐藏文件上传输入的点击事件
+                        fileInput.click();
+                    });
+                    
+                    // 添加文件上传输入的change事件监听器
+                    fileInput.addEventListener('change', function() {
+                        // 处理文件上传的逻辑
+                        var file = fileInput.files[0];
+                        if (file) {
+                            // 读取文件数据并设置图片源
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                uploadedImage.src = e.target.result;
+                                uploadedImage.style.display = 'block'; // 显示上传的图片
+                                buttonAddImage.style.display = 'none'; // 隐藏上传按钮
+                                resizeImage(uploadedImage, 100); // 调用resizeImage函数将图片大小调整为200px
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    
+                    // 添加点击图片覆盖的功能
+                    uploadedImage.addEventListener('click', function() {
+                        fileInput.click();
+                    });
+                    
+                    // 函数用于调整图片大小
+                    function resizeImage(img, maxHeight) {
+                        var ratio = maxHeight / img.height;
+                        var newWidth = img.width * ratio;
+                        if (newWidth > maxHeight) {
+                            newWidth = maxHeight;
+                            ratio = newWidth / img.width;
+                        }
+                        img.style.width = newWidth + "px";
+                        img.style.height = (img.height * ratio) + "px";
+                    }
+
+                    </script>
+
+
+
 
 
 

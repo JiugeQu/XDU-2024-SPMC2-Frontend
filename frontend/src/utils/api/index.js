@@ -20,6 +20,7 @@ instance.interceptors.request.use(
 		config.headers["token"] = token;
 
 		return config;
+		
 	},
 	(error) => {
 		Promise.reject(error);

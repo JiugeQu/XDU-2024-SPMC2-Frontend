@@ -3,8 +3,6 @@
   import { reactive, onMounted } from 'vue';
   import { ref } from 'vue';//使用ref
 
-  const props = defineProps({});
-
   // const data = reactive({});
   // 定义组件的反应性数据
   let imageUrl = ref('');//商品图片
@@ -21,7 +19,7 @@
 // 在组件挂载后立即执行的函数
 onMounted(() => {
   const token = localStorage.getItem("token"); // 替换为实际的Token
-  const status = '300'; 
+  const status = '100';
   // 准备 API 请求的 URL 
   const url = `http://localhost:8081/order/buyer/lastorder?status=${status}`;
 
@@ -29,17 +27,19 @@ onMounted(() => {
   fetch(url,{
     method:'get',
     headers: {
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
+      'token': `${token}`
       }
   })
     .then(response => response.json())
     .then(responseData => {
       // 检查是否有数据返回
-      if ( responseData.data && responseData.data.length > 0) {
+      console.log(responseData.data);
+      if ( responseData.data) {
         // 假设只返回了一笔订单数据，取第一笔数据进行处理
-        const orderData = responseData.data[0];
+        const orderData = responseData.data;
         const contentData = orderData.content[0]; // 确保这里取第一项
-        
+        //console.log(11);
         // 更新页面上的内容
         imageUrl.value = contentData.imgUrl; // 使用.ref()
         productName.value = contentData.itemId; // 使用.ref()
@@ -48,6 +48,7 @@ onMounted(() => {
         ordernum.value = contentData.quantity; // 使用.ref()
         totalPrice.value = contentData.subtotal; // 使用.ref()
         orderNumber.value = orderData.id; // 使用.ref()
+
         createTime.value = orderData.ctime; // 使用.ref() 
         // paymentTime = ''; // 可根据需要更新
         // deliveryTime = ''; // 可根据需要更新
@@ -64,14 +65,15 @@ onMounted(() => {
   const confirmReceipt = async () => {
   // const { token } = request;
   const token = localStorage.getItem("token");
-  const orderId = 3; // 这里可以是你的订单ID变量
+  const orderId = orderNumber.value; // 这里可以是你的订单ID变量
   const url = `http://localhost:8081/order/buyer/confirm/${orderId}`;
 
   try {
     const response = await fetch(url, {
       method: 'post', // 或其他适当的HTTP方法
       headers: {
-        'Authorization': `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
+        'token': `${token}`,
       }
     });
 
@@ -209,6 +211,10 @@ onMounted(() => {
 </template>
 
 <style scoped lang="css">
+button{
+  appearance: none;
+}
+
   .ml-7-5 {
     margin-left: 0.47rem;
   }

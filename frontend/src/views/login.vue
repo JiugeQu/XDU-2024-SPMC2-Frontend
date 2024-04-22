@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useRouter } from 'vue-router'; // 导入 useRouter 函数
 
 // 创建响应式变量，用于存储用户名和密码
-const username = ref('<username>');
-const password = ref('<password>');
+const username = ref('');
+const password = ref('');
   
 // 获取 Router 实例
 const router = useRouter();
@@ -26,24 +26,29 @@ const login = () => {
 
   // 发送请求
   axios(config)
-    .then(function (response) {
-      // 获取后端返回的token
-      const token = response.data.token;
-      // 存储token到localStorage
-      localStorage.setItem("token", token);
+      .then(function (response) {
+        // 根据 code 判断处理方式
+        if (response.data.code === -500) {
+          // 用户不存在，弹出提示
+          alert("user not exist");
+        } else {
+          // 获取后端返回的token
+          const token = response.data.data.token;
+          // 存储token到localStorage
+          localStorage.setItem("token", token);
 
-      console.log(JSON.stringify(response.data));
-      console.log(response.data.status);
-      if(response.data.role == 1){
-        // 使用 router.push 进行导航
-        router.push({ path: "/home", query: { id: response.data.id } });
-      }else if(response.data.role == 2){
-        router.push({ path: "/goods", query: { id: response.data.id } });
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+          console.log(JSON.stringify(response.data));
+          if(response.data.data.role == 1){
+            // 使用 router.push 进行导航
+            router.push({ path: "/home", query: { id: response.data.id } });
+          }else if(response.data.data.role == 2){
+            router.push({ path: "/goods", query: { id: response.data.id } });
+          }
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 }
 </script>
 
@@ -163,13 +168,14 @@ const login = () => {
                     class="font_4 text_8"
                     type="text"
                     placeholder="Email/ User Name"
+                    v-model="username"
                   />
                 </div>
               </div>
             </div>
             <span class="self-start font_3 text_9">Password</span>
             <div class="flex-row items-center self-stretch group_3">
-              <input id="password" class="font_4 text_10" placeholder="Password" />
+              <input id="password" class="font_4 text_10" placeholder="Password" v-model="password"/>
             </div>
             <div class="flex-row items-center self-start group_4">
               <input type="checkbox" class="shrink-0 group_5" />
@@ -177,9 +183,9 @@ const login = () => {
             </div>
 
             <div class="flex-col justify-start items-center self-stretch text-wrapper_2">
-            <router-link to="/home">
+<!--            <router-link to="/home">-->
               <button class="font_6 text_12" @click="login">Login</button>
-            </router-link>
+<!--            </router-link>-->
             </div>
             <span class="self-start font_4 text_13">Forgot password?</span>
           </div>

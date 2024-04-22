@@ -23,7 +23,7 @@ onMounted(() => {
   const token = localStorage.getItem("token"); // 替换为实际的Token
   const status = '300'; 
   // 准备 API 请求的 URL 
-  const url = `http://127.0.0.1:4523/m1/4275135-0-default/order/buyer/lastorder?status=${status}`;
+  const url = `http://localhost:8081/order/buyer/lastorder?status=${status}`;
 
   // 发起 GET 请求
   fetch(url,{
@@ -65,7 +65,7 @@ onMounted(() => {
   // const { token } = request;
   const token = localStorage.getItem("token");
   const orderId = 3; // 这里可以是你的订单ID变量
-  const url = `http://127.0.0.1:4523/m1/4275135-0-default/order/buyer/confirm/${orderId}`;
+  const url = `http://localhost:8081/order/buyer/confirm/${orderId}`;
 
   try {
     const response = await fetch(url, {

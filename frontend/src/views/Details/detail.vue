@@ -37,7 +37,7 @@ export default {
       const token = localStorage.getItem("token");
       // 发起请求获取商品详情
       const config = {
-        url: `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,
+        url: `http://localhost:8081/item/${productId}`,
         headers: {
           Authorization: `Bearer${token}`,
         },

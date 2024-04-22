@@ -38,7 +38,7 @@ export default {
         };
         console.log("paymentParams",paymentParams);
         // Send request to payment interface
-        const paymentResponse = await axios.get('http://127.0.0.1:4523/m1/4275135-0-default/pay/create', {
+        const paymentResponse = await axios.get('http://localhost:8081/pay/create', {
           params: paymentParams,
           headers: {
             Authorization: `Bearer ${token}`

@@ -248,8 +248,8 @@
                   <span class="self-start font text_29 ml-61">{{ goods.stock }}</span>
                   <span class="self-start font_6 text_30 text_1 ml-61">{{ goods.ctime }}</span>
                   <div class="flex-col items-center select ml-61">
-                    <button class="font_9 text_32 mt-19" @click="handleDelete(id)">ON SHELF</button>
-                    <button class="font_9 text_3200 mt-19" @click="handleDelete1(id)">OFF SHELF</button>
+                    <button class="font_9 text_32 mt-19" @click="handleDelete(id)">OFF SHELF</button>
+                    <button class="font_9 text_3200 mt-19" @click="handleDelete1(id)">ON SHELF</button>
                   </div>
                 </div>
               </div>
@@ -268,14 +268,14 @@
 import { ref, onMounted } from 'vue';  
 import { useRouter } from 'vue-router';  
 import { getGoodsList } from '@/utils/api/goods/index';  
-import { updateGoodsStatus } from '@/utils/api/goods/index';  
-  
+import { updateGoodsStatus1 } from '@/utils/api/goods/index';
+import { updateGoodsStatus2 } from '@/utils/api/goods/index';
 const router = useRouter();  
   
 // 响应式数据  
 const items = ref([null]);  
 const goods = ref({});  
-const goodsId = ref(123);  
+const itemId = ref({});
   
 // 处理点击事件的方法  
 const handleClick = () => {  
@@ -299,9 +299,9 @@ const getInfo = async () => {
 };  
   
 // 下架商品的方法  
-const handleDelete = async (id) => {  
+const handleDelete = async (itemId) => {
   try {  
-    await updateGoodsStatus(id, 2);  
+    await updateGoodsStatus2(itemId, 2);
     console.log('商品下架成功');  
   } catch (error) {  
     console.error('商品下架失败:', error);  
@@ -309,9 +309,9 @@ const handleDelete = async (id) => {
 };  
   
 // 上架商品的方法  
-const handleDelete1 = async (id) => {  
+const handleDelete1 = async (itemId) => {
   try {  
-    await updateGoodsStatus(id, 1);  
+    await updateGoodsStatus1(itemId, 1);
     console.log('商品上架成功');  
   } catch (error) {  
     console.error('商品上架失败:', error);  

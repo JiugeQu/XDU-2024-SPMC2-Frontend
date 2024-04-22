@@ -42,11 +42,13 @@ export default {
       const pageNum = this.currentPage;
       const pageSize = this.itemsPerPage;
       const token = localStorage.getItem("token");
+      console.log(token);
       const config = {
         method: "get",
         url: `http://localhost:8081/item/page?pageNum=${pageNum}&pageSize=${pageSize}`,
         headers: {
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`,
+          token: `${token}`,
         },
       };
 

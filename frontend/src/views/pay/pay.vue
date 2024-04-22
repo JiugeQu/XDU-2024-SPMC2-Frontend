@@ -9,6 +9,7 @@
     <div class="button-container">
       <button @click="returnUserHome">Return</button>
       <button @click="handlePay">Pay</button>
+      <div v-html="paymentHtml"></div>
     </div>
   </div>
 </template>
@@ -17,6 +18,11 @@
 import axios from 'axios'
 
 export default {
+  data() {
+    return {
+      paymentHtml: ''
+    };
+  },
   methods: {
     returnUserHome() {
       console.log("Returning to user's home page");
@@ -24,41 +30,66 @@ export default {
     },
     async handlePay() {
       try {
-        // Retrieve order data from URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const traceNo = urlParams.get('traceNo');
-        const totalAmount = urlParams.get('totalAmount');
-        const subject = urlParams.get('subject');
 
-        // Prepare payment parameters
-        const paymentParams = {
-          traceNo: traceNo,
-          totalAmount: totalAmount,
-          subject: subject
-        };
-        console.log("paymentParams",paymentParams);
+        const token = localStorage.getItem('token');
+        const traceNo = localStorage.getItem("traceNo");
+        const totalAmount = localStorage.getItem("totalAmount");
+        const subject = localStorage.getItem("subject");
+        console.log(traceNo)
+        console.log(totalAmount)
+        console.log(subject)
+
         // Send request to payment interface
-        const paymentResponse = await axios.get('http://localhost:8081/pay/create', {
-          params: paymentParams,
+        const requestUrl = `http://localhost:8081/pay/create?traceNo=${traceNo}&totalAmount=${totalAmount}&subject=${subject}`;
+        const paymentResponse = await axios.get(
+            requestUrl, {
           headers: {
-            Authorization: `Bearer ${token}`
+            'token': `${token}`,
           },
           responseType: 'text'
         });
 
         // Get HTML content of the payment page
-        const paymentHtml = paymentResponse.data;
-        console.log('Received HTML content from API:', paymentHtml);
+        window.localStorage.removeItem('url')
+        window.localStorage.setItem('url',paymentResponse.data)
+        var newWin=window.open('','_blank')
+        newWin.document.write(localStorage.getItem('url'))
+        newWin.document.close()
+        // const paymentHtml = paymentResponse.data;
+        // localStorage.setItem("paymentHtml",paymentHtml);
+        // const payurl = localStorage.getItem("paymentHtml");
+        // window.open(payurl, '_blank');
+        // console.log('Received HTML content from API:', paymentHtml);
+        //this.paymentHtml = paymentResponse.data;
 
+        // 使用正则表达式从 paymentHtml 中提取 action 的值
+        // const actionRegex = /action="([^"]*)"/;
+        // const match = paymentHtml.match(actionRegex);
+        // let actionUrl = '';
+        // if (match && match.length > 1) {
+        //   actionUrl = match[1];
+        // }
+        // 使用 window.open 打开支付窗口，并使用 actionUrl 作为 URL
+        //const paymentWindow = window.open(actionUrl, '_blank');
+
+        //const paymentWindow = window.open(paymentHtml, '_blank');
+        // window.open(paymentHtml, '_blank');
         // Open a new window and load the payment page's HTML content
-        const paymentWindow = window.open('', '_blank');
-        paymentWindow.document.write(paymentHtml);
+        // const paymentWindow = window.open('paymentHtml.data.action', '_blank');
+        // console.log("open new window");
+        // paymentWindow.document.write(paymentHtml);
+        //paymentWindow.document.documentElement.innerHTML=paymentHtml;
       } catch (error) {
         console.error('Failed to pay:', error);
         alert('Payment failed. Please retry.');
       }
     }
-  }
+  },
+  // mounted() {
+  //   // 在组件挂载完成后调用 handlePay 函数
+  //   this.handlePay();
+  // }
+
 };
 </script>
 

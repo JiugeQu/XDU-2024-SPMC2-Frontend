@@ -170,7 +170,7 @@
               src="../assets/right.png"
             />
           </div>
-          <span class="font text_4">CATEGORIES：</span>
+          <span class="font text_4">CATEGORIES:</span>
           <span class="font text_5">SUBCATEGORIES:</span>
           <div class="flex-row items-center section_6">
             <span class="font_3">OPTIONS</span>

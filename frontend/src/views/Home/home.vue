@@ -44,7 +44,7 @@ export default {
       const token = localStorage.getItem("token");
       const config = {
         method: "get",
-        url: `http://127.0.0.1:4523/m1/4275135-0-default/item/page?pageNum=${pageNum}&pageSize=${pageSize}`,
+        url: `http://localhost:8081/item/page?pageNum=${pageNum}&pageSize=${pageSize}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

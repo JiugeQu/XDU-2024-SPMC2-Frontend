@@ -42,7 +42,7 @@ const quantity = ref(1);
 onMounted(async () => {
   try {
     const itemResponse = await axios.get(
-      `http://127.0.0.1:4523/m1/4275135-0-default/item/${productId}`,{ 
+      `http://localhost:8081/item/${productId}`,{ 
         headers: { Authorization: `Bearer ${token}` 
         }
       });
@@ -107,7 +107,7 @@ const handlePayment = async () => {
 
     //下单接口
     const orderResponse = await axios.post(
-      'http://127.0.0.1:4523/m1/4275135-0-default/order',
+      'http://localhost:8081/order',
       orderData,
       { headers }
     );

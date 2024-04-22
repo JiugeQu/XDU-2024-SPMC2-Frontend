@@ -50,7 +50,7 @@ function processInputs() {
         redirect: 'follow'
       };
 
-      fetch("https://mock.apifox.com/m1/4275135-3917058-default/item?images=url1,url2", requestOptions)
+      fetch("https://localhost:8081/item?images=url1,url2", requestOptions)
     .then(response => {
         if (response.ok) {
             alert("ADD SUCCESS"); // 如果请求成功，打印成功消息

@@ -19,18 +19,26 @@ const login = () => {
   const config = {
     method: 'post',
     // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
-    url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
+    // url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
+    url: 'http://localhost:8081/user/login',
     data: formData
   };
 
   // 发送请求
   axios(config)
     .then(function (response) {
+      // 获取后端返回的token
+      const token = response.data.token;
+      // 存储token到localStorage
+      localStorage.setItem("token", token);
+
       console.log(JSON.stringify(response.data));
       console.log(response.data.status);
-      if(response.data.status == 0){
+      if(response.data.role == 1){
         // 使用 router.push 进行导航
         router.push({ path: "/home", query: { id: response.data.id } });
+      }else if(response.data.role == 2){
+        router.push({ path: "/goods", query: { id: response.data.id } });
       }
     })
     .catch(function (error) {

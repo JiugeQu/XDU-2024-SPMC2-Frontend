@@ -18,7 +18,8 @@
     const config = {
       method: 'post',
       // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161970447?apifoxResponseId=426626323',
-      url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/register?apifoxResponseId=432144324',
+      //url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/register?apifoxResponseId=432144324',
+      url: 'http://localhost:8081/user/register',
       data: formData
     };
 

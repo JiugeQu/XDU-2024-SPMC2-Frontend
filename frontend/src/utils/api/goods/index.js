@@ -6,6 +6,7 @@ export const getGoodsList = () => {
     // params:params
   });
 };
+
 export const  updateGoodsStatus1= (id) => {
     return request({
         url: '/item/status/onshelf/${id}',

@@ -248,8 +248,10 @@
                   <span class="self-start font text_29 ml-61">{{ goods.stock }}</span>
                   <span class="self-start font_6 text_30 text_1 ml-61">{{ goods.ctime }}</span>
                   <div class="flex-col items-center select ml-61">
+
                     <button class="font_9 text_3200 mt-19" @click="handleDelete1()">ON SHELF</button>
                     <button class="font_9 text_32 mt-19" @click="handleDelete2()">OFF SHELF</button>
+
                   </div>
                 </div>
               </div>
@@ -274,9 +276,9 @@ const router = useRouter();
   
 // 响应式数据  
 const items = ref([null]);  
+
 const goods = ref({});
 const id = ref('');
-
   
 // 处理点击事件的方法  
 const handleClick = () => {  
@@ -297,6 +299,7 @@ const getInfo = async () => {
     console.log(id);
     goods.value = res.data[0];
     console.log(res.data);
+
   } catch (error) {
     console.error('获取商品列表失败:', error);
   }
@@ -321,8 +324,6 @@ const handleDelete2 = async () => {
   }
 };
   
-// 上架商品的方法  
-
 </script> 
 
 <style scoped>

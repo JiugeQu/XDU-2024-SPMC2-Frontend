@@ -628,15 +628,9 @@ body * {
   left: 0;
   top: 0;
 }
-.text_1000{
-  margin-left: 0.8rem;
-}
-.text_1001{
-  margin-left: 1.6rem;
-}
 .section_2 {
   padding: 1.04rem 0.39rem 0.98rem;
-  background-color: #ffffff;
+  background-color: #000000;
   height: 4.15rem;
 }
 .image_6 {
@@ -880,7 +874,7 @@ body * {
 .text_17 {
   margin-top: 0.38rem;
   color: #1a66ff;
-  width: 5.63rem;
+  width: 3.63rem;
 }
 .text_15 {
   word-break: break-all;

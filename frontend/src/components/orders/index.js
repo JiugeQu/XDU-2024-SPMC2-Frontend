@@ -2,7 +2,7 @@ import request from '../index'
 export const getOrderDetails = () => {
     return request(
         {
-            url: 'http://127.0.0.1:4523/m1/4275135-0-default/order/seller/search',
+            url: 'http://localhost:8081/order/seller/search',
             method: 'get',
         }
     );

@@ -4,8 +4,8 @@
   import FormData from 'form-data'; // 导入FormData模块
 
   // 创建响应式变量，用于存储用户名和密码
-  const username = ref('<username>');
-  const password = ref('<password>');
+  const username = ref('');
+  const password = ref('');
 
   // 点击按钮时触发的登录函数
   const Register = () => {
@@ -93,13 +93,13 @@
               <div class="flex-col justify-start items-start self-stretch relative group_2 mt-5">
                 <span class="font_3 text_7">Email/ User Name</span>
                 <div class="flex-col justify-start items-start text-wrapper pos_12">
-                  <input id="username" class="font_4 text_8" type="text" placeholder="Please enter your email address"/>
+                  <input id="username" class="font_4 text_8" type="text" placeholder="Please enter your email address" v-model="username"/>
                 </div>
               </div>
             </div>
             <span class="self-start font_3 text_9">Password</span>
             <div class="flex-row items-center self-stretch group_3">
-              <input id="password" class="font_4 text_10" placeholder="Password" />
+              <input id="password" class="font_4 text_10" placeholder="Password" v-model="password"/>
             </div>
             <div class="flex-row items-center self-start group_4">
               <input type="checkbox" class="shrink-0 group_5" />

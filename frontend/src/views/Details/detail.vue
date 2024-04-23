@@ -39,7 +39,8 @@ export default {
       const config = {
         url: `http://localhost:8081/item/${productId}`,
         headers: {
-          Authorization: `Bearer${token}`,
+          // Authorization: `Bearer${token}`,
+          token: `${token}`,
         },
       };
 

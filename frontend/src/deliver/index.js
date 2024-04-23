@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const BASE_URL = "http://127.0.0.1:4523";
+const BASE_URL = "http://localhost:8081";
 const TIME_out = 20000;
 
 const instance = Axios.create({
@@ -33,3 +33,4 @@ instance.interceptors.response.use(
 	}
 );
 export default instance;
+

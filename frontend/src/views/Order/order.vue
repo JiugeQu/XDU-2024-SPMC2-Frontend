@@ -11,6 +11,7 @@ const router = useRouter();
 
 
 const token = localStorage.getItem('token');
+console.log(token);
 const productId = route.params.id;
 
 
@@ -43,7 +44,9 @@ onMounted(async () => {
   try {
     const itemResponse = await axios.get(
       `http://localhost:8081/item/${productId}`,{ 
-        headers: { Authorization: `Bearer ${token}` 
+        headers: {
+          // Authorization: `Bearer ${token}`
+          token: `${token}`,
         }
       });
 
@@ -84,37 +87,55 @@ const selectPayment = (method) => {
   }
 };
 
+// 确保 token 的值不为空
+if (!token) {
+  console.error('Token is empty!');
+  // 处理 token 为空的情况，例如跳转到登录页面或者重新获取 token
+}
+
 //处理下单
 const handlePayment = async () => {
   try {
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      'Content-type':'application/json'
-    };
-    
-    //收集订单数据
+    const address = data.address;
+    const consignee = data.consignee;
+    const phonenumber = data.phonenumber;
+    const sellerId = productInfo.sellerId;
     const orderData = [{
       itemId: productId,
       quantity: quantity.value,
       unitPrice: productInfo.price,
-      address: data.address,
-      consignee: data.consignee,
-      phonenumber: data.phonenumber,
-      sellerId: productInfo.sellerId,
     }];
 
     console.log('Order Data:', orderData);
 
+// 构建完整的请求 URL，包含查询参数
+    const requestUrl = `http://localhost:8081/order/order?addrDesc=${address}&addrUsername=${consignee}&addrPhone=${phonenumber}&sellerId=${sellerId}`;
+
     //下单接口
     const orderResponse = await axios.post(
-      'http://localhost:8081/order',
-      orderData,
-      { headers }
-    );
-    
+        // 'http://localhost:8081/order/order',
+        requestUrl,
+        orderData,
+        {
+        headers: {
+          'token': `${token}`,
+        }
+    });
+    console.log(token);
     //检查是否下单成功
     if (orderResponse.status === 200) {
-      const { traceNo, totalAmount, subject } = orderResponse.data;
+      // const { traceNo, totalAmount, subject } = orderResponse.data;
+      const traceNo = orderResponse.data.data.id;
+      const totalAmount = orderResponse.data.data.totalAmount;
+      const subject = orderResponse.data.data.userId;
+
+      localStorage.setItem("traceNo", traceNo);
+      localStorage.setItem("totalAmount", totalAmount);
+      localStorage.setItem("subject", subject);
+      console.log(traceNo)
+      console.log(totalAmount)
+      console.log(subject)
+
       // Redirect to payment page with order data as URL parameters
       console.log("pay参数：",orderResponse.data)
       window.location.href = `/pay?traceNo=${traceNo}&totalAmount=${totalAmount}&subject=${subject}`;

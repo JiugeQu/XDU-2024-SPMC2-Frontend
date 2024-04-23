@@ -248,8 +248,8 @@
                   <span class="self-start font text_29 ml-61">{{ goods.stock }}</span>
                   <span class="self-start font_6 text_30 text_1 ml-61">{{ goods.ctime }}</span>
                   <div class="flex-col items-center select ml-61">
-                    <button class="font_9 text_32 mt-19" @click="handleDelete(id)">ON SHELF</button>
-                    <button class="font_9 text_3200 mt-19" @click="handleDelete1(id)">OFF SHELF</button>
+                    <button class="font_9 text_3200 mt-19" @click="handleDelete1()">ON SHELF</button>
+                    <button class="font_9 text_32 mt-19" @click="handleDelete2()">OFF SHELF</button>
                   </div>
                 </div>
               </div>
@@ -268,55 +268,61 @@
 import { ref, onMounted } from 'vue';  
 import { useRouter } from 'vue-router';  
 import { getGoodsList } from '@/utils/api/goods/index';  
-import { updateGoodsStatus } from '@/utils/api/goods/index';  
-  
+import { updateGoodsStatus1 } from '@/utils/api/goods/index';
+import { updateGoodsStatus2 } from '@/utils/api/goods/index';
 const router = useRouter();  
   
 // 响应式数据  
 const items = ref([null]);  
-const goods = ref({});  
-const goodsId = ref(123);  
+const goods = ref({});
+const id = ref('');
+
   
 // 处理点击事件的方法  
 const handleClick = () => {  
   router.push({ path:'/delivers'});  
 };   
   
-// 组件挂载时调用  
-onMounted(() => {  
-  getInfo();  
-});  
-  
-// 获取商品列表的方法  
-const getInfo = async () => {  
-  try {  
-    const res = await getGoodsList();  
-    goods.value = res.data[0];  
+//组件挂载时调用
+onMounted(() => {
+  getInfo();
+});
+
+
+// // 获取商品列表的方法
+const getInfo = async () => {
+  try {
+    const res = await getGoodsList();
+    const id = res.data[0].itemId;
+    console.log(id);
+    goods.value = res.data[0];
     console.log(res.data);
-  } catch (error) {  
-    console.error('获取商品列表失败:', error);  
-  }  
-};  
-  
-// 下架商品的方法  
-const handleDelete = async (id) => {  
-  try {  
-    await updateGoodsStatus(id, 2);  
-    console.log('商品下架成功');  
-  } catch (error) {  
-    console.error('商品下架失败:', error);  
-  }  
-};  
+  } catch (error) {
+    console.error('获取商品列表失败:', error);
+  }
+};
+
+const handleDelete1 = async () => {
+  try {
+    const result = await updateGoodsStatus1(goods.value.itemId);
+    console.log('商品上架成功',result);
+  } catch (error) {
+    console.error('商品上架失败:', error);
+  }
+};
+//
+// // 下架商品的方法
+const handleDelete2 = async () => {
+  try {
+    await updateGoodsStatus2(goods.value.itemId);
+    console.log('商品下架成功');
+  } catch (error) {
+    console.error('商品下架失败:', error);
+  }
+};
   
 // 上架商品的方法  
-const handleDelete1 = async (id) => {  
-  try {  
-    await updateGoodsStatus(id, 1);  
-    console.log('商品上架成功');  
-  } catch (error) {  
-    console.error('商品上架失败:', error);  
-  }  
-};  
+
 </script> 
 
 <style scoped>

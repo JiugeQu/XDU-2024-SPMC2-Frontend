@@ -26,6 +26,9 @@
     // 发送请求
     axios(config)
       .then(function (response) {
+        if (response.data.status == 0) {
+          alert("register successfully");
+        }
         console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
@@ -33,7 +36,6 @@
       });
   };
 </script>
-
 
 <template>
   <div class="flex-col justify-start page">
@@ -99,7 +101,7 @@
             </div>
             <span class="self-start font_3 text_9">Password</span>
             <div class="flex-row items-center self-stretch group_3">
-              <input id="password" class="font_4 text_10" placeholder="Password" v-model="password"/>
+              <input id="password" class="font_4 text_10" type="password" placeholder="Password" v-model="password"/>
             </div>
             <div class="flex-row items-center self-start group_4">
               <input type="checkbox" class="shrink-0 group_5" />

@@ -323,6 +323,11 @@
                               <span class="font text_33">{{ orders.addrPhone }}</span>
                             </div>
                             <span class="font_10 mt-1119">{{ orders.addrDesc }}</span>
+                            
+                            <!-- 发货填写快递单号-0509QYFH -->
+                            <span class="font_9 text_31">Delivery Number</span>
+                            <input class="font_4 text_10" placeholder="input the delivery number" type="delinum" v-model="delinum"/>
+                      
                           </div>
                         </div>
                         <div class="shrink-0 section_13 view_5"></div>
@@ -456,7 +461,10 @@ import { Deliver } from '@/deliver/fahuo/index';
 const router = useRouter(); 
 const orders = ref({});  
 const ordersDetail = ref({});  
+
+const delinum = ref('');
 const orderId = ref('');
+
 const inputText_1 = ref('');  
 const inputText_2 = ref('');  
 const inputText_3 = ref('');  
@@ -506,8 +514,11 @@ const getInfo = async () => {
 // 处理两个功能的异步方法  
 const handleBothFunctions = async () => {
   try {  
-    const deliveryResult = await Deliver(orders.value.id);
+    const deliveryResult = await Deliver(orders.value.id, delinum);
+    // const deliveryResult = await Deliver(orders.value.id);
+    
     console.log('发货结果:', deliveryResult);  
+    console.log('快递单号：',delinum);
     alert('have delivered');  
     // 根据deliveryResult更新UI或执行其他操作  
   } catch (error) {  
@@ -528,6 +539,7 @@ const toggleShipmentStatus = () => {
 const selectOption = (optionText) => {  
   selectedOption.value = optionText;  
 };  
+
 </script>
   
   

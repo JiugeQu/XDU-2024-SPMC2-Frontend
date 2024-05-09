@@ -7,5 +7,10 @@ export const Deliver = (orderId, delinum) => {
       //  url: `/order/seller/send/4?orderId=${orderId}&delinum=${delinum}`,
       url: `/order/seller/send/?orderId=${orderId}&delinum=${delinum}`,
       method: 'post',
+export const Deliver = (orderId) => {
+      return request(
+        {
+        url: `/order/seller/send/${orderId}`,
+        method: 'post',
         });
   };

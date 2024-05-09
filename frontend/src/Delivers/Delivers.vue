@@ -463,6 +463,7 @@ const orders = ref({});
 const ordersDetail = ref({});  
 
 const delinum = ref('');
+const orderId = ref('');
 
 const inputText_1 = ref('');  
 const inputText_2 = ref('');  
@@ -514,6 +515,8 @@ const getInfo = async () => {
 const handleBothFunctions = async () => {
   try {  
     const deliveryResult = await Deliver(orders.value.id, delinum);
+    // const deliveryResult = await Deliver(orders.value.id);
+    
     console.log('发货结果:', deliveryResult);  
     console.log('快递单号：',delinum);
     alert('have delivered');  

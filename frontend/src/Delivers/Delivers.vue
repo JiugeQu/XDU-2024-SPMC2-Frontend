@@ -323,12 +323,17 @@
                               <span class="font text_33">{{ orders.addrPhone }}</span>
                             </div>
                             <span class="font_10 mt-1119">{{ orders.addrDesc }}</span>
+                            
+                            <!-- 发货填写快递单号-0509QYFH -->
+                            <span class="font_9 text_31">Delivery Number</span>
+                            <input class="font_4 text_10" placeholder="input the delivery number" type="delinum" v-model="delinum"/>
+                      
                           </div>
                         </div>
                         <div class="shrink-0 section_13 view_5"></div>
                         <!--span class="self-start font_11 text_10 text_35">OPERATE</span-->
                         <div>
-                          <button class="self-start" @click="handleBothFunctions(orderId)" :class="['font_11', 'text_10', 'text_35']">OPERATE</button>
+                          <button class="self-start" @click="handleBothFunctions()" :class="['font_11', 'text_10', 'text_35']">OPERATE</button>
                         </div>
                       </div>
                     </div>
@@ -456,7 +461,9 @@ import { Deliver } from '@/deliver/fahuo/index';
 const router = useRouter(); 
 const orders = ref({});  
 const ordersDetail = ref({});  
-const orderId = ref(4);  
+
+const delinum = ref('');
+
 const inputText_1 = ref('');  
 const inputText_2 = ref('');  
 const inputText_3 = ref('');  
@@ -492,19 +499,23 @@ onMounted(() => {
 // 获取订单详情的方法  
 const getInfo = async () => {  
   try {  
-    const res = await getOrderDetails();  
-    orders.value = res.data[0];  
-    ordersDetail.value = orders.value.content[0];  
+    const res = await getOrderDetails();
+    orders.value = res.data[0];
+    // console.log(res);
+    // const orderId = res.data[0].id;
+    // console.log(orderId);
+    ordersDetail.value = orders.value.content[0];
   } catch (error) {  
     console.error('获取订单详情失败:', error);  
   }  
 };  
   
 // 处理两个功能的异步方法  
-const handleBothFunctions = async (orderId) => {  
+const handleBothFunctions = async () => {
   try {  
-    const deliveryResult = await Deliver(orderId);  
+    const deliveryResult = await Deliver(orders.value.id, delinum);
     console.log('发货结果:', deliveryResult);  
+    console.log('快递单号：',delinum);
     alert('have delivered');  
     // 根据deliveryResult更新UI或执行其他操作  
   } catch (error) {  
@@ -525,6 +536,7 @@ const toggleShipmentStatus = () => {
 const selectOption = (optionText) => {  
   selectedOption.value = optionText;  
 };  
+
 </script>
   
   

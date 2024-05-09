@@ -19,7 +19,7 @@ const login = () => {
   const config = {
     method: 'post',
     // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
-    // url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
+    //url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
     url: 'http://localhost:8081/user/login',
     data: formData
   };
@@ -51,82 +51,6 @@ const login = () => {
       });
 }
 </script>
-
-
-<!-- <script setup>
-  import { ref } from 'vue';
-  import axios from 'axios';
-  import FormData from 'form-data'; // 导入FormData模块
-
-    // 创建响应式变量，用于存储用户名和密码
-    const username = ref('<username>');
-    const password = ref('<password>');
-      
-    // 点击按钮时触发的登录函数
-    const login = () => {
-      // 创建FormData实例并设置用户名和密码
-      const formData = new FormData();
-      formData.append('username', username.value);
-      formData.append('password', password.value);
-      const config = {
-        method: 'post',
-       // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
-        url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
-        data: formData
-      };
-
-    // 发送请求
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        console.log(response.data.status);
-        if(response.data.status==0){
-          this.$router.push({path:"/home"+response.data.id});
-          console.log(response.data.id);
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    }
-</script> -->
-
-<!-- <script setup>
-  import { ref } from 'vue';
-  import axios from 'axios';
-  import FormData from 'form-data'; // 导入FormData模块
-
-  // 创建响应式变量，用于存储用户名和密码
-  const username = ref('<username>');
-  const password = ref('<password>');
-
-  // 点击按钮时触发的登录函数
-  const login = () => {
-    // 创建FormData实例并设置用户名和密码
-    const formData = new FormData();
-    formData.append('username', username.value);
-    formData.append('password', password.value);
-
-    // 设置请求配置
-    const config = {
-      method: 'post',
-      // url: 'http://127.0.0.1:4523/m2/4278659-0-default/161973538',
-      url: 'http://127.0.0.1:4523/m1/4275135-0-default/user/login',
-      data: formData
-    };
-
-    // 发送请求
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-</script> -->
-
 
 <template>
   <div class="flex-col justify-start page">
@@ -175,7 +99,7 @@ const login = () => {
             </div>
             <span class="self-start font_3 text_9">Password</span>
             <div class="flex-row items-center self-stretch group_3">
-              <input id="password" class="font_4 text_10" placeholder="Password" v-model="password"/>
+              <input id="password" class="font_4 text_10" placeholder="Password" type="password" v-model="password"/>
             </div>
             <div class="flex-row items-center self-start group_4">
               <input type="checkbox" class="shrink-0 group_5" />
@@ -183,9 +107,7 @@ const login = () => {
             </div>
 
             <div class="flex-col justify-start items-center self-stretch text-wrapper_2">
-<!--            <router-link to="/home">-->
               <button class="font_6 text_12" @click="login">Login</button>
-<!--            </router-link>-->
             </div>
             <span class="self-start font_4 text_13">Forgot password?</span>
           </div>
@@ -515,5 +437,4 @@ button {
 .text_15 {
   color: #000000;
 }
-
 </style>

@@ -1,8 +1,11 @@
 import request from '../index'
-export const Deliver = (orderId) => {    
+
+export const Deliver = (orderId, delinum) => {
       return request(
-        {  
-        url: `/m1/4275135-3917058-default/order/seller/send/${orderId}`,  
-        method: 'post',  
-        });  
+        {
+      //   url: `/order/seller/send/${orderId}`,
+      //  url: `/order/seller/send/4?orderId=${orderId}&delinum=${delinum}`,
+      url: `/order/seller/send/?orderId=${orderId}&delinum=${delinum}`,
+      method: 'post',
+        });
   };

@@ -10,6 +10,8 @@ import Order_confirm from '../views/order_confirm/order_confirm.vue';
 // import Delivers from '../views/Delivers/Delivers.vue';
 import Goods from '../Goods/Goods.vue';
 import Delivers from '../Delivers/Delivers.vue';
+import Address from '../pages/Address/address.vue';
+import Newaddress from '../pages/Address/addnew.vue';
 
 const routes = [
   {
@@ -56,6 +58,14 @@ const routes = [
     path: '/delivers',
     name: 'delivers',
     component: Delivers,
+  },
+  {
+    path:'/address',
+    component:Address,
+  },
+  {
+    path:'/addnew',
+    component:Newaddress,
   },
 ];
 

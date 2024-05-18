@@ -12,7 +12,7 @@ import Goods from '../Goods/Goods.vue';
 import Delivers from '../Delivers/Delivers.vue';
 import Address from '../pages/Address/address.vue';
 import Newaddress from '../pages/Address/addnew.vue';
-
+import Shoppingcart from '../pages/Cart/cart.vue';
 const routes = [
   {
     path: '/login',
@@ -66,6 +66,11 @@ const routes = [
   {
     path:'/addnew',
     component:Newaddress,
+  },
+  {
+    path: '/shoppingcart',
+    name: 'Shoppingcart',
+    component: Shoppingcart,
   },
 ];
 

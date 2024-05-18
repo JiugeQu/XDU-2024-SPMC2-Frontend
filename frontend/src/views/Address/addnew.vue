@@ -48,15 +48,30 @@
       <div class="group_7">
         <span class="font_1">Label</span>
         <label>
-          <input type="checkbox" class="text_2" v-model="homeTags" value="Home" />
+          <input
+            type="checkbox"
+            class="text_2"
+            v-model="homeTags"
+            value="Home"
+          />
           <span class="font_2">Home</span>
         </label>
         <label>
-          <input type="checkbox" class="text_2" v-model="companyTags" value="Company" />
+          <input
+            type="checkbox"
+            class="text_2"
+            v-model="companyTags"
+            value="Company"
+          />
           <span class="font_2">Company</span>
         </label>
         <label>
-          <input type="checkbox" class="text_2" v-model="schoolTags" value="School" />
+          <input
+            type="checkbox"
+            class="text_2"
+            v-model="schoolTags"
+            value="School"
+          />
           <span class="font_2">School</span>
         </label>
       </div>
@@ -68,27 +83,29 @@
 </template>
         
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   beforeCreate() {
-    document.querySelector('body').setAttribute('style', 'background-color:rgb(235, 235, 235)');
+    document
+      .querySelector("body")
+      .setAttribute("style", "background-color:rgb(235, 235, 235)");
   },
   data() {
     return {
-      consignee: '',
-      phonenumber: '',
-      location: '',
-      detailedlocation: '',
+      consignee: "",
+      phonenumber: "",
+      location: "",
+      detailedlocation: "",
       homeTags: false,
       companyTags: false,
-      schoolTags: false
+      schoolTags: false,
       // token:''
     };
   },
 
   methods: {
     handleSubmit() {
-      console.log('handleSubmit called');
+      console.log("handleSubmit called");
       const formData = {
         // consignee: this.consignee,
         // phonenumber: this.phonenumber,
@@ -96,22 +113,22 @@ export default {
         // detailedlocation: this.detailedlocation,
         // tags: [],
 
-        addrDesc: this.location,
-        addrUsername: this.consignee,
-        addrPhone: this.phonenumber
+        addrDesc:this.location,
+        addrUsername:this.consignee,
+        addrPhone:this.phonenumber,
       };
-      if (this.homeTags) formData.tags.push('Home');
-      if (this.companyTags) formData.tags.push('Company');
-      if (this.schoolTags) formData.tags.push('School');
-      const token = localStorage.getItem('token');
+      if (this.homeTags) formData.tags.push("Home");
+      if (this.companyTags) formData.tags.push("Company");
+      if (this.schoolTags) formData.tags.push("School");
+      const token = localStorage.getItem("token");
       console.log(token);
       const config = {
-        method: 'post',
+        method: "post",
         url: `http://127.0.0.1:4523/m1/4275135-0-default/user/addAdd?adddes=${formData.addrDesc}&addname=${formData.addrUsername}&addphone=${formData.addrPhone}`,
         headers: {
           token: `${token}`,
-          data: formData
-        }
+          data: formData,
+        },
       };
 
       axios(config)
@@ -119,13 +136,13 @@ export default {
           console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-          console.error('Error submitting form:', error);
+          console.error("Error submitting form:", error);
         });
     },
     gotoaddr() {
-      this.$router.push({ path: '/address' });
-    }
-  }
+      this.$router.push({ path: "/address" });
+    },
+  },
 };
 </script>
         

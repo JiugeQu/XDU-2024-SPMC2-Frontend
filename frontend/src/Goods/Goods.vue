@@ -229,102 +229,112 @@
             <span class="ml-58 font_7 text_1234">OPERATIONS</span>
           </div>
         </div>
+<!--        <div class="flex-col self-stretch">-->
+<!--          <div-->
+<!--            class="flex-col justify-start items-start relative list-item"-->
+<!--            v-for="(item, index) in items"-->
+<!--            :key="index"-->
+<!--          >-->
+<!--            <div class="section_11 view_5"></div>-->
+<!--            <div class="flex-col justify-start items-start group_11 pos_2">-->
+<!--              <img-->
+<!--                :src="goods.imgUrl"-->
+<!--                class="image_16 image_20"-->
+<!--              />-->
+<!--              <div class="flex-row justify-between form-item_2 group_12">-->
+<!--                <span class="self-start font_6 text_27">{{ goods.title }}</span>-->
+<!--                <div class="flex-row self-center">-->
+<!--                  <span class="self-start font text_28">¥{{ goods.price }}</span>-->
+<!--                  <span class="self-start font text_29 ml-61">{{ goods.stock }}</span>-->
+<!--                  <span class="self-start font_6 text_30 text_1 ml-61">{{ goods.ctime }}</span>-->
+<!--                  <div class="flex-col items-center select ml-61">-->
+
+<!--                    <button class="font_9 text_3200 mt-19" @click="handleDelete1()">ON SHELF</button>-->
+<!--                    <button class="font_9 text_32 mt-19" @click="handleDelete2()">OFF SHELF</button>-->
+
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <span class="font_10 pos_3">{{ goods.description }}</span>-->
+<!--            <span class="font_11 text_33 pos_4">{{ goods.statusDesc }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="flex-col self-stretch">
           <div
-            class="flex-col justify-start items-start relative list-item"
-            v-for="(item, index) in items"
-            :key="index"
+              class="flex-col justify-start items-start relative list-item"
+              v-for="(item, index) in items"
+              :key="index"
           >
             <div class="section_11 view_5"></div>
             <div class="flex-col justify-start items-start group_11 pos_2">
               <img
-                :src="goods.imgUrl"
-                class="image_16 image_20"
+                  :src="item.imgUrl"
+              class="image_16 image_20"
               />
               <div class="flex-row justify-between form-item_2 group_12">
-                <span class="self-start font_6 text_27">{{ goods.title }}</span>
+                <span class="self-start font_6 text_27">{{ item.title }}</span> <!-- 使用 item 对象中的 title 属性 -->
                 <div class="flex-row self-center">
-                  <span class="self-start font text_28">¥{{ goods.price }}</span>
-                  <span class="self-start font text_29 ml-61">{{ goods.stock }}</span>
-                  <span class="self-start font_6 text_30 text_1 ml-61">{{ goods.ctime }}</span>
+                  <span class="self-start font text_28">{{ item.price }}</span> <!-- 使用 item 对象中的 price 属性 -->
+                  <span class="self-start font text_29 ml-61">{{ item.stock }}</span> <!-- 使用 item 对象中的 stock 属性 -->
+                  <span class="self-start font_6 text_30 text_1 ml-61">{{ item.ctime }}</span> <!-- 使用 item 对象中的 statusDesc 属性 -->
                   <div class="flex-col items-center select ml-61">
-
-                    <button class="font_9 text_3200 mt-19" @click="handleDelete1()">ON SHELF</button>
-                    <button class="font_9 text_32 mt-19" @click="handleDelete2()">OFF SHELF</button>
-
+                    <button class="font_9 text_3200 mt-19">ON SHELF</button> <!-- 修正闭合标签 -->
+                    <button class="font_9 text_32 mt-19">OFF SHELF</button> <!-- 修正闭合标签 -->
                   </div>
                 </div>
               </div>
             </div>
-            <span class="font_10 pos_3">{{ goods.description }}</span>
-            <span class="font_11 text_33 pos_4">{{ goods.statusDesc }}</span>
+            <span class="font_10 pos_3">{{ item.description }}</span> <!-- 使用 item 对象中的 ctime 属性 -->
+            <span class="font_11 text_33 pos_4">{{ item.itemId }}</span> <!-- 使用 item 对象中的 itemId 属性 -->
           </div>
         </div>
+
         <div class="self-start divider"></div>
       </div>
     </div>
   </div>
 </div>
 </template>
-<script setup>  
-import { ref, onMounted } from 'vue';  
-import { useRouter } from 'vue-router';  
-import { getGoodsList } from '@/utils/api/goods/index';  
-import { updateGoodsStatus1 } from '@/utils/api/goods/index';
-import { updateGoodsStatus2 } from '@/utils/api/goods/index';
-const router = useRouter();  
-  
-// 响应式数据  
-const items = ref([null]);  
-
-const goods = ref({});
-const id = ref('');
-  
-// 处理点击事件的方法  
-const handleClick = () => {  
-  router.push({ path:'/delivers'});  
-};   
-  
-//组件挂载时调用
-onMounted(() => {
-  getInfo();
-});
-
-
-// // 获取商品列表的方法
-const getInfo = async () => {
-  try {
-    const res = await getGoodsList();
-    const id = res.data[0].itemId;
-    console.log(id);
-    goods.value = res.data[0];
-    console.log(res.data);
-
-  } catch (error) {
-    console.error('获取商品列表失败:', error);
-  }
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      items: [],
+    };
+  },
+  mounted() {
+    // 在组件挂载后立即发起请求
+    this.fetchData();
+  },
+  methods: {
+    fetchData(){
+      const token = localStorage.getItem("token");
+      // console.log(token);
+      // Make a GET request to the specified URL
+      axios.get('http://localhost:8081/item/management', {
+        headers: {
+          'token': token,
+        },
+      })
+          .then(response => {
+            console.log(token);
+            // Handle the response data
+            console.log(response.data);
+            this.items = response.data.data; // Assuming 'data' contains the array of items
+          })
+          .catch(error => {
+            // Handle errors
+            console.error('Error fetching data:', error);
+          });
+    },
+    handleClick() {
+      this.$router.push('/delivers');
+    },
+  },
 };
-
-const handleDelete1 = async () => {
-  try {
-    const result = await updateGoodsStatus1(goods.value.itemId);
-    console.log('商品上架成功',result);
-  } catch (error) {
-    console.error('商品上架失败:', error);
-  }
-};
-//
-// // 下架商品的方法
-const handleDelete2 = async () => {
-  try {
-    await updateGoodsStatus2(goods.value.itemId);
-    console.log('商品下架成功');
-  } catch (error) {
-    console.error('商品下架失败:', error);
-  }
-};
-  
-</script> 
+</script>
 
 <style scoped>
 .ml-57 {

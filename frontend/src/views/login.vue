@@ -43,6 +43,8 @@ const login = () => {
             router.push({ path: "/home", query: { id: response.data.id } });
           }else if(response.data.data.role == 2){
             router.push({ path: "/goods", query: { id: response.data.id } });
+          }else if(response.data.data.role == 3){
+            router.push({ path: "/ManagerHome", query: { id: response.data.id } });
           }
         }
       })

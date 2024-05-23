@@ -295,34 +295,38 @@
                     <span class="font ml-137">OPERATE</span>
                   </div>
                 </div>
-                <div class="flex-col section_11 mt-15">
+
+                <div class="flex-col section_11 mt-15"
+                     v-for="(item, index) in items"
+                     :key="index">
+
                   <div class="flex-row justify-between items-center section_12">
-                    <span class="font_3">ORDER.NO : {{ orders.id }}</span>
-                    <span class="font text_27">SUM：￥{{ ordersDetail.unitPrice*ordersDetail.quantity }}</span>
+                    <span class="font_3">ORDER.NO : {{ item.id }}</span>
+                    <span class="font text_27">SUM：￥{{ item.content[0].unitPrice*item.content[0].quantity }}</span>
                   </div>
                   <div class="flex-row items-center group_27">
-                    <img :src="ordersDetail.imgUrl" class="shrink-0 image_16"
+                    <img :src="item.content[0].imgUrl" class="shrink-0 image_16"
                        />
                     <div class="flex-row form-item ml-13">
                       <div class="flex-col shrink-0 self-start group_29">
                         <!-- orders{{ orders.content }} -->
-                        <span class="self-stretch font_3">{{ ordersDetail.itemDesc }}</span>
+                        <span class="self-stretch font_3">{{ item.content[0].itemDesc }}</span>
                         <span class="mt-34 self-start" :class="['font_12', shipmentStatusClass]">{{ currentShipmentStatus }}</span>
                       </div>
                       <div class="flex-col items-end shrink-0 self-start group_30">
-                        <span class="font text_30">¥{{ ordersDetail.unitPrice }}</span>
-                        <span class="mt-20 font text_34">x{{ ordersDetail.quantity }}</span>
+                        <span class="font text_30">¥{{ item.content[0].unitPrice }}</span>
+                        <span class="mt-20 font text_34">x{{ item.content[0].quantity }}</span>
                       </div>
                       <div class="flex-row select">
                         <div class="flex-row flex-1 group_28">
-                          <span class="self-start font_9 text_31">{{ orders.username }}</span>
+                          <span class="self-start font_9 text_31">{{ item.username }}</span>
                           <div class="shrink-0 section_13 view_4"></div>
                           <div class="flex-col flex-1 self-start group_27 view_6">
                             <div class="flex-row justify-center items-baseline relative">
-                              <span class="font_9 text_32 pos_2">{{ orders.addrUsername }}</span>
-                              <span class="font text_33">{{ orders.addrPhone }}</span>
+                              <span class="font_9 text_32 pos_2">{{ item.addrUsername }}</span>
+                              <span class="font text_33">{{ item.addrPhone }}</span>
                             </div>
-                            <span class="font_10 mt-1119">{{ orders.addrDesc }}</span>
+                            <span class="font_10 mt-1119">{{ item.addrDesc }}</span>
                             
                             <!-- 发货填写快递单号-0509QYFH -->
                             <span class="font_9 text_31">Delivery Number</span>
@@ -333,12 +337,13 @@
                         <div class="shrink-0 section_13 view_5"></div>
                         <!--span class="self-start font_11 text_10 text_35">OPERATE</span-->
                         <div>
-                          <button class="self-start" @click="handleBothFunctions()" :class="['font_11', 'text_10', 'text_35']">OPERATE</button>
+                          <button class="self-start" @click="handleBothFunctions(item)" :class="['font_11', 'text_10', 'text_35']">OPERATE</button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+
               </div>
               <!--<div class="flex-col section_11 view_8">
     <div class="flex-row justify-between items-center section_12">
@@ -450,93 +455,73 @@
     </div>
   </template>
   
-<script setup> 
-import { useRouter } from 'vue-router';  
-import { ref, computed, onMounted } from 'vue';  
-// 假设 getOrderDetails 和 Deliver 是从其他模块导入的函数  
-import { getOrderDetails } from '@/components/orders/index'; // 替换为实际的导入路径 
-import { Deliver } from '@/deliver/fahuo/index';
-  
-// 响应式数据 
-const router = useRouter(); 
-const orders = ref({});  
-const ordersDetail = ref({});  
-
-const delinum = ref('');
-
-const inputText_1 = ref('');  
-const inputText_2 = ref('');  
-const inputText_3 = ref('');  
-const currentShipmentStatus = ref('have not delivered');  
-const showOptions = ref(false);  
-const selectedOption = ref('');  
-const options = ref([  
-  { text: '选项1', value: 'option1' },  
-  { text: '选项2', value: 'option2' },  
-  { text: '选项3', value: 'option3' },  
-  // ... 其他选项  
-]);  
-  
-// 计算属性  
-const shipmentStatusClass = computed(() => {  
-  switch (currentShipmentStatus.value) {  
-    case 'have not delivered':  
-      return 'some-unshipped-class'; // 替换为实际的未发货状态样式类名  
-    case 'have delivered':  
-      return 'some-shipped-class'; // 替换为实际的已发货状态样式类名  
-    default:  
-      return '';  
-  }  
-});  
-const handleClick = () => {  
-  router.push({ path:'/goods'});  
-}; 
-// 组件挂载时调用  
-onMounted(() => {  
-  getInfo();  
-});  
-  
-// 获取订单详情的方法  
-const getInfo = async () => {  
-  try {  
-    const res = await getOrderDetails();
-    orders.value = res.data[0];
-    // console.log(res);
-    // const orderId = res.data[0].id;
-    // console.log(orderId);
-    ordersDetail.value = orders.value.content[0];
-  } catch (error) {  
-    console.error('获取订单详情失败:', error);  
-  }  
-};  
-  
-// 处理两个功能的异步方法  
-const handleBothFunctions = async () => {
-  try {  
-    const deliveryResult = await Deliver(orders.value.id, delinum);
-    console.log('发货结果:', deliveryResult);  
-    console.log('快递单号：',delinum);
-    alert('have delivered');  
-    // 根据deliveryResult更新UI或执行其他操作  
-  } catch (error) {  
-    console.error('发货失败:', error);  
-    // 显示错误给用户  
-  } finally {  
-    // 无论Deliver函数成功还是失败，都切换发货状态  
-    toggleShipmentStatus();  
-  }  
-};  
-  
-// 切换发货状态的方法  
-const toggleShipmentStatus = () => {  
-  const currentIndex = ['have not delivered', 'have delivered'].indexOf(currentShipmentStatus.value);  
-  const nextIndex = (currentIndex + 1) % 2;  
-  currentShipmentStatus.value = ['have not delivered', 'have delivered'][nextIndex];  
-};  
-const selectOption = (optionText) => {  
-  selectedOption.value = optionText;  
-};  
-
+<script>
+import axios from 'axios';
+export default {
+  data() {
+    return {
+      items: [],
+    };
+  },
+  mounted() {
+    // 在组件挂载后立即发起请求
+    this.fetchData();
+  },
+  methods: {
+    fetchData(){
+      const token = localStorage.getItem("token");
+      const statuses=200;
+      // console.log(token);
+      // Make a GET request to the specified URL
+      axios.get('http://localhost:8081/order/seller/search?statuses=200', {
+        headers: {
+          'token': token,
+        },
+        data:statuses,
+      })
+          .then(response => {
+            console.log(token);
+            // Handle the response data
+            console.log(response.data);
+            this.items = response.data.data; // Assuming 'data' contains the array of items
+          })
+          .catch(error => {
+            // Handle errors
+            console.error('Error fetching data:', error);
+          });
+    },
+    handleClick() {
+      this.$router.push('/goods');
+    },
+    handleBothFunctions(item){
+      console.log(this.delinum);
+      const data={
+        orderId:item.id,
+        delinum:this.delinum,
+      };
+      const token = localStorage.getItem("token");
+      console.log(token);
+      const config = {
+        method: "post",
+        url: `http://localhost:8081/order/seller/send/${item.id}?delinum=${this.delinum}`,
+        // url: `http://127.0.0.1:4523/m1/4275135-0-default/user/addAdd?adddes=${formData.addrDesc}&addname=${formData.addrUsername}&addphone=${formData.addrPhone}`,
+        headers: {
+          token: `${token}`,
+          data: data,
+        },
+      };
+      console.log(config);
+      axios(config)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+            this.fetchData();
+          })
+          .catch((error) => {
+            console.error("Error submitting form:", error);
+          });
+    },
+  },
+};
 </script>
   
   

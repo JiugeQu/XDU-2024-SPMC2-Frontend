@@ -1,5 +1,5 @@
 <template>
-  <div class="all">
+  <div>
     <div class="product-container">
       <div v-for="(item, index) in items" :key="index" class="product-item">
         <img :src="item.url" class="product-image" @click="detail(item)" />
@@ -46,9 +46,11 @@ export default {
       const config = {
         method: "get",
         url: `http://localhost:8081/item/page?pageNum=${pageNum}&pageSize=${pageSize}`,
+        // url: `http://127.0.0.1:4523/m1/4275135-0-default/item/page?pageNum=${pageNum}&pageSize=${pageSize}`,
         headers: {
-          // Authorization: `Bearer ${token}`,
           token: `${token}`,
+          // Authorization: `Bearer ${token}`,
+
         },
       };
 
@@ -103,11 +105,6 @@ export default {
 </script>
 
 <style scoped>
-.all{
-    margin:0;
-    padding:0;
-    background-color: #cfc0c0d9;
-}
 .product-container {
   padding: 0 1rem; 
   margin-left:2.2rem;

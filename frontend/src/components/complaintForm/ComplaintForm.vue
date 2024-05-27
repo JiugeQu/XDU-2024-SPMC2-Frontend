@@ -10,7 +10,8 @@ const props = defineProps({
   orderId: Number
 });
 
-const token='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoyLCJpZCI6NCwidXNlcm5hbWUiOiJtaXpvcmUxIiwiZXhwIjoxNzIzMDQzNjg2fQ.FgBVQRQMoUUPORwf8yyzP5gPncXbStjRn11tZtJrmiw';
+// const token='eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoyLCJpZCI6NCwidXNlcm5hbWUiOiJtaXpvcmUxIiwiZXhwIjoxNzIzMDQzNjg2fQ.FgBVQRQMoUUPORwf8yyzP5gPncXbStjRn11tZtJrmiw';
+const token = localStorage.getItem('token');
 
 const formData = reactive({
   type: '',
@@ -26,14 +27,35 @@ function submitForm() {
     return;
   }
 
+  // 将选中的投诉类型值传递给后台
+  let selectedType;
+  switch(formData.type) {
+    case 'type1':
+      selectedType = 'Inaccurate Product Description';
+      break;
+    case 'type2':
+      selectedType = 'Delayed Shipping';
+      break;
+    case 'type3':
+      selectedType = 'Product Quality Issues';
+      break;
+    case 'type4':
+      selectedType = 'Other';
+      break;
+    default:
+      selectedType = '';
+  }
   formData.orderId = props.orderId;
-  axios.post('http://127.0.0.1:4523/m1/4275135-0-default/complaint/save', formData, {
+  formData.type = selectedType;
+  
+  //axios.post('http://127.0.0.1:4523/m1/4275135-0-default/complaint/save', formData, {
+  axios.post('http://localhost:8081/complaint/save', formData, {
     headers: {
-      token: token,
+      token: `${token}`,
     }
   })
   .then(response => {
-    console.log('订单id：',formData.orderId,'；理由：',formData.reason);
+    console.log('订单id：',formData.orderId,'类型：',formData.type,'理由：',formData.reason);
     formData.type = '';
     formData.reason = '';
     successMessage.value = 'Complaint submitted successfully!';
@@ -56,7 +78,13 @@ function closeForm() {
       <!-- 表单内容 -->
       <div class="form-group">
         <label for="type">Type</label>
-        <input id="type" type="text" v-model="formData.type" required>
+        <select id="type" v-model="formData.type" required>
+          <option value="">Select Type</option>
+          <option value="type1">Inaccurate Product Description</option>
+          <option value="type2">Delayed Shipping</option>
+          <option value="type3">Product Quality Issues</option>
+          <option value="type4">Other</option>
+        </select>
       </div>
       <div class="form-group">
         <label for="reason">Reason</label>

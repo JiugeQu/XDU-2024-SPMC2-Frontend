@@ -61,6 +61,11 @@ onMounted(() => {
                 orderNumber: orderData.id,
                 createTime: orderData.ctime,
                 sellerName: orderData.sellerName,
+                addrDesc: orderData.addrDesc,
+                addrUsername: orderData.addrUsername,
+                addrPhone:orderData.addrPhone,
+                delicom:orderData.delicom,
+                delinum:orderData.delinum,
                 items: orderData.content.map(contentData => {
                     return {
                         imageUrl: contentData.imgUrl,
@@ -171,7 +176,10 @@ const confirmReceipt = (orderId) => {
             />
             <span class="ml-10 font_3 text_7">{{order.sellerName}}</span>
         </div>
-        <span class="self-start font_4 text_8">seller already sent</span>
+        <span class="self-start font_4 text_8 address">delivery address：{{ order.addrDesc }}</span>
+        <span class="self-start font_4 text_8 address">consignee：{{ order.addrUsername }}</span>
+        <span class="self-start font_4 text_8 address">tele：{{ order.addrPhone}}</span>
+        <!-- <span class="self-start font_4 text_8">seller already sent</span> -->
     </div>
     <div class="flex-row justify-between section_2" v-for="item in order.items" :key="item.productName">
       <div class="flex-row">
@@ -377,11 +385,10 @@ const confirmReceipt = (orderId) => {
     line-height: 0.7rem;
     color: #ff8d1a;
   }
-  .text_8 {
-    margin-right: 0.31rem;
-    margin-top: 0.5rem;
-    line-height: 0.71rem;
-  }
+  .text_8, .address { /* 修改此处 */
+    display: block; /* 使每个span元素独占一行 */
+    margin-top: 0.5rem; /* 调整为统一的顶部边距 */
+}
   .section_2 {
     margin-left: 0.13rem;
     margin-right: 0.25rem;

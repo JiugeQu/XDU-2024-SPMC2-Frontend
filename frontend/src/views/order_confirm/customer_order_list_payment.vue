@@ -40,6 +40,11 @@ onMounted(() => {
                 orderNumber: orderData.id,
                 createTime: orderData.ctime,
                 sellerName: orderData.sellerName,
+                addrDesc: orderData.addrDesc,
+                addrUsername: orderData.addrUsername,
+                addrPhone:orderData.addrPhone,
+                delicom:orderData.delicom,
+                delinum:orderData.delinum,
                 items: orderData.content.map(contentData => {
                     return {
                         imageUrl: contentData.imgUrl,
@@ -154,6 +159,9 @@ const handlePayment= (order) => {
         <span class="font_4 text_7 text_8">Waiting for payment</span>
     </div>
     <div class="flex-col" v-for="item in order.items" :key="item.productName">
+      <span class="font_4 text_7 text_8">delivery address：{{ order.addrDesc }}</span>
+        <span class="font_4 text_7 text_8">consignee：{{ order.addrUsername }}</span>
+        <span class="font_4 text_7 text_8">tele：{{ order.addrPhone}}</span>
       <div class="flex-row items-end section_2 view">
                 <img
                     class="image_4"

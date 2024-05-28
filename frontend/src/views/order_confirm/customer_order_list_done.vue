@@ -42,6 +42,11 @@ onMounted(() => {
                 orderNumber: orderData.id,
                 createTime: orderData.ctime,
                 sellerName: orderData.sellerName,
+                addrDesc: orderData.addrDesc,
+                addrUsername: orderData.addrUsername,
+                addrPhone:orderData.addrPhone,
+                delicom:orderData.delicom,
+                delinum:orderData.delinum,
                 items: orderData.content.map(contentData => {
                     return {
                         imageUrl: contentData.imgUrl,
@@ -104,11 +109,15 @@ onMounted(() => {
           </button>
         </a>
         <span class="font_2 text_6">Completed</span>
+        
       </div>
     </div>
     <div class="flex-col mt-19-5">
       <div class="flex-col mt-12 list-item" v-for="order in orders" :key="order.orderNumber">
     <div class="flex-row justify-between group_5">
+      <span class="font_4 text_81">收货人：{{ order.addrDesc }}</span>
+        <span class="font_4 text_91">收货地址：{{ order.addrUsername }}</span>
+        <span class="font_4 text_101">tele：{{ order.addrPhone}}</span>
         <div class="flex-row items-center self-center">
             <img
                 class="shrink-0 image_3"
@@ -252,6 +261,18 @@ onMounted(() => {
     font-family: HarmonyOSSansSC;
     line-height: 0.7rem;
     color: #696969;
+  }
+  .text_81 {
+    margin-left: 3.38rem;
+    line-height: 0.69rem;
+  }
+  .text_91 {
+    margin-left: 3.31rem;
+    line-height: 0.69rem;
+  }
+  .text_101 {
+    margin-left: 3.06rem;
+    line-height: 0.61rem;
   }
   .text_8 {
     line-height: 0.71rem;
